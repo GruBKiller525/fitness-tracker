@@ -58,7 +58,7 @@ export function Body() {
 
       <button
         onClick={() => setShowForm(!showForm)}
-        className="w-full py-4 bg-indigo-600 rounded-2xl text-white font-semibold mb-4 active:bg-indigo-700"
+        className="w-full py-4 bg-orange-600 rounded-2xl text-white font-semibold mb-4 active:bg-indigo-700"
       >
         + Nueva medición
       </button>
@@ -87,7 +87,7 @@ export function Body() {
             rows={2}
           />
           <div className="flex gap-2">
-            <button onClick={save} className="flex-1 py-3 bg-indigo-600 rounded-xl text-white font-semibold active:bg-indigo-700">
+            <button onClick={save} className="flex-1 py-3 bg-orange-600 rounded-xl text-white font-semibold active:bg-indigo-700">
               Guardar
             </button>
             <button onClick={() => setShowForm(false)} className="flex-1 py-3 bg-gray-700 rounded-xl text-white active:bg-gray-600">

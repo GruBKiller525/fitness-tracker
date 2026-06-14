@@ -91,7 +91,7 @@ export function SessionSummary() {
     <div className="min-h-svh bg-gray-950 pb-8">
       <header className="sticky top-0 z-40 bg-gray-900 border-b border-gray-700 px-4 py-3 flex items-center justify-between">
         <h1 className="text-lg font-bold text-white">Resumen</h1>
-        <Link to="/" className="text-sm text-indigo-400">Inicio</Link>
+        <Link to="/" className="text-sm text-orange-400">Inicio</Link>
       </header>
 
       <div className="px-4 pt-6 space-y-4">
@@ -135,7 +135,7 @@ export function SessionSummary() {
                 ))}
               </div>
               {bestE1rm > 0 && (
-                <p className="text-xs text-indigo-400 mt-2">e1RM estimado: {bestE1rm} kg</p>
+                <p className="text-xs text-orange-400 mt-2">e1RM estimado: {bestE1rm} kg</p>
               )}
             </div>
           ))}
@@ -171,7 +171,7 @@ export function SessionSummary() {
 
         <button
           onClick={() => navigate('/')}
-          className="w-full py-4 bg-indigo-600 rounded-2xl text-white font-semibold active:bg-indigo-700"
+          className="w-full py-4 bg-orange-600 rounded-2xl text-white font-semibold active:bg-indigo-700"
         >
           Volver al inicio
         </button>

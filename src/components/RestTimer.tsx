@@ -38,7 +38,7 @@ export function RestTimer({ seconds, onDone }: Props) {
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2 mb-6">
           <div
-            className="bg-indigo-500 h-2 rounded-full transition-all duration-1000"
+            className="bg-orange-500 h-2 rounded-full transition-all duration-1000"
             style={{ width: `${pct}%` }}
           />
         </div>

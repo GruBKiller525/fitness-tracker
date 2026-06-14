@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <!-- Background glow -->
+  <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#f97316" stop-opacity="0.15"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="400" height="300" fill="url(#glow)"/>
+
+  <!-- Dragon Ball 4-star (main, large) -->
+  <radialGradient id="ball1" cx="40%" cy="35%" r="60%">
+    <stop offset="0%" stop-color="#fde68a"/>
+    <stop offset="40%" stop-color="#f97316"/>
+    <stop offset="100%" stop-color="#9a3412"/>
+  </radialGradient>
+  <circle cx="200" cy="140" r="90" fill="url(#ball1)" opacity="0.95"/>
+  <!-- shine -->
+  <ellipse cx="170" cy="105" rx="28" ry="18" fill="white" opacity="0.25"/>
+  <!-- stars -->
+  <circle cx="190" cy="130" r="8" fill="#dc2626"/>
+  <circle cx="215" cy="130" r="8" fill="#dc2626"/>
+  <circle cx="202" cy="148" r="8" fill="#dc2626"/>
+  <circle cx="185" cy="148" r="8" fill="#dc2626"/>
+
+  <!-- Dragon Ball small left -->
+  <radialGradient id="ball2" cx="40%" cy="35%" r="60%">
+    <stop offset="0%" stop-color="#fde68a"/>
+    <stop offset="40%" stop-color="#f97316"/>
+    <stop offset="100%" stop-color="#9a3412"/>
+  </radialGradient>
+  <circle cx="60" cy="220" r="38" fill="url(#ball2)" opacity="0.7"/>
+  <ellipse cx="48" cy="208" rx="12" ry="7" fill="white" opacity="0.2"/>
+  <circle cx="58" cy="220" r="5" fill="#dc2626"/>
+
+  <!-- Dragon Ball small right -->
+  <circle cx="345" cy="60" r="32" fill="url(#ball2)" opacity="0.6"/>
+  <ellipse cx="334" cy="50" rx="10" ry="6" fill="white" opacity="0.2"/>
+  <circle cx="340" cy="58" r="4" fill="#dc2626"/>
+  <circle cx="352" cy="64" r="4" fill="#dc2626"/>
+  <circle cx="346" cy="74" r="4" fill="#dc2626"/>
+
+  <!-- Lightning bolts -->
+  <path d="M340 140 L330 165 L338 165 L325 195 L348 162 L339 162 Z" fill="#fbbf24" opacity="0.8"/>
+  <path d="M55 80 L48 98 L54 98 L44 118 L62 100 L55 100 Z" fill="#fbbf24" opacity="0.6"/>
+</svg>

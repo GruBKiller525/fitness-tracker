@@ -127,12 +127,12 @@ export function Session() {
               pattern="[0-9]*\.?[0-9]*"
               value={sleepHours}
               onChange={(e) => setSleepHours(e.target.value)}
-              className="w-full bg-gray-800 rounded-xl px-4 py-3 text-2xl font-bold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full bg-gray-800 rounded-xl px-4 py-3 text-2xl font-bold text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
           <button
             onClick={saveIntro}
-            className="w-full py-4 bg-indigo-600 rounded-2xl text-white text-lg font-bold active:bg-indigo-700"
+            className="w-full py-4 bg-orange-600 rounded-2xl text-white text-lg font-bold active:bg-orange-700"
           >
             Empezar entrenamiento
           </button>
@@ -241,7 +241,7 @@ function ExerciseBlock({
               {targetSets}×{targetRepsMin}-{targetRepsMax} · RIR {targetRIR} · {restLabel}
             </p>
             {lastRecord && (
-              <p className="text-xs text-indigo-400 mt-0.5">
+              <p className="text-xs text-orange-400 mt-0.5">
                 Último: {lastRecord.set.weight}kg × {lastRecord.set.reps} reps
               </p>
             )}
@@ -384,7 +384,7 @@ function NumInput({ value, onChange, disabled }: NumInputProps) {
         if (!isNaN(v)) onChange(v);
         else if (e.target.value === '') onChange(0);
       }}
-      className="w-full bg-gray-800 rounded-lg px-1 py-2 text-center text-xl font-bold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+      className="w-full bg-gray-800 rounded-lg px-1 py-2 text-center text-xl font-bold text-white focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
     />
   );
 }

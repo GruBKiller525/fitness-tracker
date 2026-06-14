@@ -91,10 +91,20 @@ export function Home() {
 
   return (
     <div className="flex flex-col min-h-svh pb-20 bg-gray-950">
-      {/* Header */}
-      <div className="px-4 pt-6 pb-4">
-        <p className="text-gray-400 text-sm capitalize">{dayLabel}</p>
-        <h1 className="text-2xl font-bold text-white mt-0.5">¡Hola! 💪</h1>
+      {/* Header Dragon Ball */}
+      <div className="relative overflow-hidden">
+        <img
+          src="/dragonball.svg"
+          alt=""
+          className="absolute right-0 top-0 w-48 opacity-30 pointer-events-none select-none"
+        />
+        <div className="px-4 pt-6 pb-4 relative z-10">
+          <p className="text-orange-400 text-sm capitalize font-medium">{dayLabel}</p>
+          <h1 className="text-3xl font-black text-white mt-0.5 tracking-tight">
+            ¡A entrenar, guerrero! ⚡
+          </h1>
+          <p className="text-gray-500 text-xs mt-1">El poder se forja en el esfuerzo</p>
+        </div>
       </div>
 
       <div className="px-4 space-y-4">
@@ -102,14 +112,14 @@ export function Home() {
         {todayRoutine ? (
           <button
             onClick={() => startSession(todayRoutine.id)}
-            className="w-full py-5 bg-indigo-600 rounded-2xl text-white text-xl font-bold active:bg-indigo-700 transition-colors"
+            className="w-full py-5 bg-orange-600 rounded-2xl text-white text-xl font-black active:bg-orange-700 transition-colors shadow-lg shadow-orange-900/40 tracking-wide"
           >
-            Empezar {todayRoutine.name}
+            ⚡ {todayRoutine.name}
           </button>
         ) : (
-          <div className="w-full py-4 bg-gray-800 rounded-2xl text-gray-400 text-center">
-            <p className="text-lg font-semibold">Día de descanso</p>
-            <p className="text-sm mt-1">Toca para sesión libre</p>
+          <div className="w-full py-4 bg-gray-800 rounded-2xl text-gray-400 text-center border border-gray-700">
+            <p className="text-lg font-semibold">🌙 Día de recuperación</p>
+            <p className="text-sm mt-1">Hasta el guerrero más fuerte descansa</p>
           </div>
         )}
 
@@ -135,7 +145,7 @@ export function Home() {
 
         {/* Habit tracker */}
         <div className="bg-gray-900 rounded-2xl p-4 space-y-3">
-          <p className="text-sm font-semibold text-gray-300">Hábitos de hoy</p>
+          <p className="text-sm font-semibold text-orange-400">🔥 Entrenamiento diario</p>
           <div className="flex gap-2">
             <button
               onClick={() => toggleHabit('morningMobility')}
@@ -168,7 +178,7 @@ export function Home() {
               </span>
               <button
                 onClick={() => changeSnacks(1)}
-                className="w-10 h-10 bg-indigo-700 rounded-lg text-xl text-white flex items-center justify-center active:bg-indigo-600"
+                className="w-10 h-10 bg-orange-700 rounded-lg text-xl text-white flex items-center justify-center active:bg-orange-600"
               >
                 +
               </button>
@@ -187,7 +197,7 @@ export function Home() {
                   {routines?.find((r) => r.id === lastSession.routineDayId)?.name?.split('—')[0]?.trim() ?? '—'}
                 </p>
                 <p className="text-xs text-gray-400 mt-1">{formatDate(lastSession.date)}</p>
-                <p className="text-xs text-indigo-400 mt-0.5">
+                <p className="text-xs text-orange-400 mt-0.5">
                   {lastSession.sets.filter((s) => s.completed).length} series
                 </p>
               </>
@@ -209,7 +219,7 @@ export function Home() {
             )}
             <button
               onClick={() => setShowWeightInput(!showWeightInput)}
-              className="mt-2 text-xs text-indigo-400 underline"
+              className="mt-2 text-xs text-orange-400 underline"
             >
               + Registrar hoy
             </button>
@@ -230,7 +240,7 @@ export function Home() {
             />
             <button
               onClick={saveWeight}
-              className="px-5 bg-indigo-600 rounded-xl text-white font-semibold active:bg-indigo-700"
+              className="px-5 bg-orange-600 rounded-xl text-white font-semibold active:bg-orange-700"
             >
               OK
             </button>

@@ -93,18 +93,18 @@ export function Settings() {
                 placeholder="Token (secret_xxx…)"
                 value={notionToken}
                 onChange={(e) => setNotionToken(e.target.value)}
-                className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
               <input
                 type="text"
                 placeholder="ID de base de datos"
                 value={notionDbId}
                 onChange={(e) => setNotionDbId(e.target.value)}
-                className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
               <button
                 onClick={saveNotion}
-                className="w-full py-3 bg-indigo-600 rounded-xl text-white font-medium active:bg-indigo-700"
+                className="w-full py-3 bg-orange-600 rounded-xl text-white font-medium active:bg-orange-700"
               >
                 Guardar configuración
               </button>
@@ -123,14 +123,14 @@ export function Settings() {
           <p className="text-sm font-semibold text-gray-300">Exportar / Importar datos</p>
           <button
             onClick={exportData}
-            className="w-full py-3 bg-indigo-700 rounded-xl text-white font-medium active:bg-indigo-600"
+            className="w-full py-3 bg-orange-700 rounded-xl text-white font-medium active:bg-orange-600"
           >
             Exportar JSON
           </button>
           <div className="flex gap-2">
             <button
               onClick={() => setImportMode('merge')}
-              className={`flex-1 py-2 rounded-xl text-sm ${importMode === 'merge' ? 'bg-indigo-600 text-white' : 'bg-gray-800 text-gray-400'}`}
+              className={`flex-1 py-2 rounded-xl text-sm ${importMode === 'merge' ? 'bg-orange-600 text-white' : 'bg-gray-800 text-gray-400'}`}
             >
               Merge
             </button>
@@ -216,13 +216,13 @@ function ExerciseCatalog({ onBack }: { onBack: () => void }) {
   return (
     <div className="min-h-svh bg-gray-950 pb-8">
       <header className="sticky top-0 z-40 bg-gray-900 border-b border-gray-700 px-4 py-3 flex items-center gap-3">
-        <button onClick={onBack} className="text-indigo-400 text-lg">‹</button>
+        <button onClick={onBack} className="text-orange-400 text-lg">‹</button>
         <h1 className="text-lg font-semibold text-white">Ejercicios</h1>
       </header>
       <div className="px-4 pt-4 space-y-3">
         <button
           onClick={() => setShowNew(!showNew)}
-          className="w-full py-3 bg-indigo-600 rounded-xl text-white font-medium active:bg-indigo-700"
+          className="w-full py-3 bg-orange-600 rounded-xl text-white font-medium active:bg-orange-700"
         >
           + Nuevo ejercicio
         </button>
@@ -233,12 +233,12 @@ function ExerciseCatalog({ onBack }: { onBack: () => void }) {
               placeholder="Nombre del ejercicio"
               value={form.name}
               onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-              className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
             <select
               value={form.muscleGroup}
               onChange={(e) => setForm((f) => ({ ...f, muscleGroup: e.target.value as MuscleGroup }))}
-              className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
             >
               {muscleGroups.map((m) => <option key={m} value={m}>{m}</option>)}
             </select>
@@ -247,7 +247,7 @@ function ExerciseCatalog({ onBack }: { onBack: () => void }) {
                 <button
                   key={t}
                   onClick={() => setForm((f) => ({ ...f, type: t }))}
-                  className={`flex-1 py-2 rounded-xl text-sm ${form.type === t ? 'bg-indigo-600 text-white' : 'bg-gray-800 text-gray-400'}`}
+                  className={`flex-1 py-2 rounded-xl text-sm ${form.type === t ? 'bg-orange-600 text-white' : 'bg-gray-800 text-gray-400'}`}
                 >
                   {t}
                 </button>
@@ -257,12 +257,12 @@ function ExerciseCatalog({ onBack }: { onBack: () => void }) {
               placeholder="URL imagen / GIF (opcional)"
               value={form.imageUrl}
               onChange={(e) => setForm((f) => ({ ...f, imageUrl: e.target.value }))}
-              className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
             {form.imageUrl.trim() && (
               <img src={form.imageUrl} alt="preview" className="w-full max-h-40 object-contain rounded-xl bg-gray-800" />
             )}
-            <button onClick={saveExercise} className="w-full py-3 bg-indigo-600 rounded-xl text-white font-semibold active:bg-indigo-700">
+            <button onClick={saveExercise} className="w-full py-3 bg-orange-600 rounded-xl text-white font-semibold active:bg-orange-700">
               Guardar
             </button>
           </div>
@@ -305,14 +305,14 @@ function ExerciseCatalog({ onBack }: { onBack: () => void }) {
                   placeholder="Pega URL de imagen o GIF"
                   value={editImageUrl}
                   onChange={(e) => setEditImageUrl(e.target.value)}
-                  className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                   autoFocus
                 />
                 {editImageUrl.trim() && (
                   <img src={editImageUrl} alt="preview" className="w-full max-h-40 object-contain rounded-xl bg-gray-800" />
                 )}
                 <div className="flex gap-2">
-                  <button onClick={() => saveImageUrl(ex.id)} className="flex-1 py-2 bg-indigo-600 rounded-xl text-white text-sm font-medium active:bg-indigo-700">
+                  <button onClick={() => saveImageUrl(ex.id)} className="flex-1 py-2 bg-orange-600 rounded-xl text-white text-sm font-medium active:bg-orange-700">
                     Guardar
                   </button>
                   <button onClick={() => setEditingId(null)} className="flex-1 py-2 bg-gray-700 rounded-xl text-gray-300 text-sm active:bg-gray-600">

@@ -64,7 +64,7 @@ export function History() {
               <div
                 key={iso}
                 className={`aspect-square flex items-center justify-center rounded-full text-sm ${
-                  trained ? 'bg-indigo-600 text-white font-bold' : 'text-gray-500'
+                  trained ? 'bg-orange-600 text-white font-bold' : 'text-gray-500'
                 }`}
               >
                 {day.getDate()}
@@ -81,7 +81,7 @@ export function History() {
             key={f}
             onClick={() => setFilter(f)}
             className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${
-              filter === f ? 'bg-indigo-600 text-white' : 'bg-gray-800 text-gray-400'
+              filter === f ? 'bg-orange-600 text-white' : 'bg-gray-800 text-gray-400'
             }`}
           >
             {f === 'all' ? 'Todas' : f === 'day-a' ? 'Día A' : 'Día B'}

@@ -20,7 +20,7 @@ export function Stats() {
             key={t}
             onClick={() => setTab(t)}
             className={`flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-colors capitalize ${
-              tab === t ? 'bg-indigo-600 text-white' : 'bg-gray-800 text-gray-400'
+              tab === t ? 'bg-orange-600 text-white' : 'bg-gray-800 text-gray-400'
             }`}
           >
             {t}
@@ -91,7 +91,7 @@ function ExerciseStats() {
                 <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 11 }} />
                 <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
                 <Tooltip contentStyle={{ background: '#1f2937', border: 'none', borderRadius: 8 }} labelStyle={{ color: '#fff' }} />
-                <Line type="monotone" dataKey="e1rm" stroke="#6366f1" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="e1rm" stroke="#f97316" strokeWidth={2} dot={false} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -103,7 +103,7 @@ function ExerciseStats() {
                 <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 11 }} />
                 <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
                 <Tooltip contentStyle={{ background: '#1f2937', border: 'none', borderRadius: 8 }} />
-                <Bar dataKey="volume" fill="#4f46e5" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="volume" fill="#ea580c" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -164,7 +164,7 @@ function GlobalStats() {
               <XAxis dataKey="week" tick={{ fill: '#6b7280', fontSize: 10 }} />
               <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
               <Tooltip contentStyle={{ background: '#1f2937', border: 'none', borderRadius: 8 }} />
-              <Bar dataKey="vol" fill="#4f46e5" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="vol" fill="#ea580c" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -231,7 +231,7 @@ function BodyStats() {
             <YAxis domain={['auto', 'auto']} tick={{ fill: '#6b7280', fontSize: 11 }} />
             <Tooltip contentStyle={{ background: '#1f2937', border: 'none', borderRadius: 8 }} />
             <Line type="monotone" dataKey="peso" stroke="#4b5563" strokeWidth={1} dot={{ r: 2, fill: '#9ca3af' }} />
-            <Line type="monotone" dataKey="media7" stroke="#6366f1" strokeWidth={2} dot={false} name="Media 7d" />
+            <Line type="monotone" dataKey="media7" stroke="#f97316" strokeWidth={2} dot={false} name="Media 7d" />
           </LineChart>
         </ResponsiveContainer>
       </div>
