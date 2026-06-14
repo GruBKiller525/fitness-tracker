@@ -38,7 +38,7 @@ export function StretchList() {
               onClick={() => navigate(`/stretch/${r.id}`)}
               className="w-full bg-gray-900 rounded-2xl p-4 flex items-center gap-4 active:bg-gray-800 transition-colors text-left"
             >
-              <span className="text-4xl">{emoji(r.id)}</span>
+              <img src={icon(r.id)} alt="" className="w-12 h-12 object-contain flex-shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-white font-bold text-base">{r.name}</p>
                 {r.description && (
@@ -58,9 +58,9 @@ export function StretchList() {
   );
 }
 
-function emoji(id: string) {
-  if (id === 'stretch-morning') return '🌅';
-  if (id === 'stretch-evening') return '🌙';
-  if (id === 'stretch-postworkout') return '💪';
-  return '🧘';
+function icon(id: string) {
+  if (id === 'stretch-morning') return '/saibaiman1.png';
+  if (id === 'stretch-evening') return '/saibaiman2.png';
+  if (id === 'stretch-postworkout') return '/saibaiman3.png';
+  return '/saibaiman1.png';
 }
