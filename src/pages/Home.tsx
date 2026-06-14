@@ -93,7 +93,7 @@ export function Home() {
   return (
     <div className="flex flex-col min-h-svh pb-20 bg-gray-950 relative">
       <img
-        src="/vegeta_wallpaper.png"
+        src="/Vegeta_Wallpaper.png"
         alt=""
         className="fixed inset-0 w-full h-full object-cover opacity-20 pointer-events-none select-none z-0"
       />
