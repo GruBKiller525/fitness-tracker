@@ -144,14 +144,20 @@ export function Session() {
   return (
     <div className="flex flex-col min-h-svh bg-gray-950">
       {/* Sticky header */}
-      <header className="sticky top-0 z-40 bg-gray-900 border-b border-gray-700 px-4 py-3 flex items-center justify-between">
-        <div>
-          <p className="text-xs text-gray-400">{routine.name}</p>
+      <header className="sticky top-0 z-40 bg-gray-900 border-b border-gray-700 px-2 py-3 flex items-center gap-2">
+        <button
+          onClick={() => navigate(-1)}
+          className="w-10 h-10 flex items-center justify-center text-orange-400 text-2xl active:text-orange-300 flex-shrink-0"
+        >
+          ‹
+        </button>
+        <div className="flex-1 min-w-0">
+          <p className="text-xs text-gray-400 truncate">{routine.name}</p>
           <p className="text-lg font-bold text-white tabular-nums">{secondsToMMSS(elapsed)}</p>
         </div>
         <button
           onClick={finishSession}
-          className="px-5 py-2 bg-green-700 rounded-xl text-white font-semibold text-sm active:bg-green-600"
+          className="px-5 py-2 bg-green-700 rounded-xl text-white font-semibold text-sm active:bg-green-600 flex-shrink-0"
         >
           Terminar
         </button>

@@ -89,9 +89,15 @@ export function SessionSummary() {
 
   return (
     <div className="min-h-svh bg-gray-950 pb-8">
-      <header className="sticky top-0 z-40 bg-gray-900 border-b border-gray-700 px-4 py-3 flex items-center justify-between">
-        <h1 className="text-lg font-bold text-white">Resumen</h1>
-        <Link to="/" className="text-sm text-orange-400">Inicio</Link>
+      <header className="sticky top-0 z-40 bg-gray-900 border-b border-gray-700 px-2 py-3 flex items-center gap-2">
+        <button
+          onClick={() => navigate(-1)}
+          className="w-10 h-10 flex items-center justify-center text-orange-400 text-2xl active:text-orange-300"
+        >
+          ‹
+        </button>
+        <h1 className="text-lg font-bold text-white flex-1">Resumen</h1>
+        <Link to="/" className="text-sm text-orange-400 pr-2">Inicio</Link>
       </header>
 
       <div className="px-4 pt-6 space-y-4">
