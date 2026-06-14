@@ -133,15 +133,23 @@ export function Home() {
             </button>
             <button
               onClick={() => navigate('/stretch/stretch-morning')}
-              className="w-full py-3 bg-gray-800 rounded-xl text-white text-base font-bold active:bg-gray-700 border border-gray-600"
+              className="flex-1 rounded-xl overflow-hidden relative active:opacity-80 transition-opacity h-24"
             >
-              🌅 Movilidad mañana <span className="text-gray-400 font-normal text-sm">(7 min)</span>
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-700 to-orange-900" />
+              <div className="absolute inset-0 flex flex-col items-start justify-end p-3">
+                <span className="text-white text-sm font-black drop-shadow">🌅 Movilidad mañana</span>
+                <span className="text-orange-200 text-xs">7 min</span>
+              </div>
             </button>
             <button
               onClick={() => navigate('/stretch/stretch-evening')}
-              className="w-full py-3 bg-gray-800 rounded-xl text-white text-base font-bold active:bg-gray-700 border border-gray-600"
+              className="flex-1 rounded-xl overflow-hidden relative active:opacity-80 transition-opacity h-24"
             >
-              🌙 Estiramientos noche <span className="text-gray-400 font-normal text-sm">(8 min)</span>
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 to-gray-900" />
+              <div className="absolute inset-0 flex flex-col items-start justify-end p-3">
+                <span className="text-white text-sm font-black drop-shadow">🌙 Estiramientos noche</span>
+                <span className="text-indigo-300 text-xs">8 min</span>
+              </div>
             </button>
           </div>
         )}
