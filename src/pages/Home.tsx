@@ -124,9 +124,19 @@ export function Home() {
             ⚡ {todayRoutine.name}
           </button>
         ) : (
-          <div className="w-full py-4 bg-gray-800 rounded-2xl text-gray-400 text-center border border-gray-700">
-            <p className="text-lg font-semibold">🌙 Día de recuperación</p>
-            <p className="text-sm mt-1">Hasta el guerrero más fuerte descansa</p>
+          <div className="space-y-2">
+            <button
+              onClick={() => startSession('day-a')}
+              className="w-full py-4 bg-orange-600 rounded-2xl text-white text-lg font-black active:bg-orange-700 tracking-wide shadow-lg shadow-orange-900/40"
+            >
+              ⚡ Sesión de entrenamiento
+            </button>
+            <button
+              onClick={() => startSession('day-b')}
+              className="w-full py-4 bg-gray-800 rounded-2xl text-white text-lg font-bold active:bg-gray-700 border border-gray-600"
+            >
+              🧘 Estiramientos
+            </button>
           </div>
         )}
 
