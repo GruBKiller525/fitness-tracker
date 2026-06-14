@@ -4,7 +4,6 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db/db';
 import { secondsToMMSS, e1rm } from '../lib/utils';
 import type { SessionSet } from '../db/types';
-import { EnergyPicker } from '../components/EnergyPicker';
 import { RestTimer } from '../components/RestTimer';
 
 export function Session() {
@@ -18,9 +17,6 @@ export function Session() {
   );
   const exercises = useLiveQuery(() => db.exercises.toArray());
 
-  const [showIntro, setShowIntro] = useState(true);
-  const [energy, setEnergy] = useState<number>(3);
-  const [sleepHours, setSleepHours] = useState<string>('7');
   const [restTimer, setRestTimer] = useState<{ seconds: number } | null>(null);
   const [elapsed, setElapsed] = useState(0);
   const startRef = useRef<number>(Date.now());
@@ -30,11 +26,6 @@ export function Session() {
     return () => clearInterval(id);
   }, []);
 
-  async function saveIntro() {
-    if (!id) return;
-    await db.sessions.update(id, { energy: energy as 1|2|3|4|5, sleepHours: parseFloat(sleepHours) || 7 });
-    setShowIntro(false);
-  }
 
   async function updateSet(exerciseId: string, setIndex: number, field: keyof SessionSet, value: number | boolean) {
     if (!id || !session) return;
@@ -113,33 +104,6 @@ export function Session() {
     );
   }
 
-  if (showIntro) {
-    return (
-      <div className="min-h-svh bg-gray-950 px-4 pt-8">
-        <h2 className="text-xl font-bold text-white mb-6">{routine.name}</h2>
-        <div className="space-y-6">
-          <EnergyPicker value={energy} onChange={setEnergy} />
-          <div>
-            <p className="text-sm text-gray-400 mb-2">Horas de sueño</p>
-            <input
-              type="number"
-              inputMode="decimal"
-              pattern="[0-9]*\.?[0-9]*"
-              value={sleepHours}
-              onChange={(e) => setSleepHours(e.target.value)}
-              className="w-full bg-gray-800 rounded-xl px-4 py-3 text-2xl font-bold text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
-            />
-          </div>
-          <button
-            onClick={saveIntro}
-            className="w-full py-4 bg-orange-600 rounded-2xl text-white text-lg font-bold active:bg-orange-700"
-          >
-            Empezar entrenamiento
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col min-h-svh bg-gray-950">
