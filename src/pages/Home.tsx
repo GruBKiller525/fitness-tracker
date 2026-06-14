@@ -128,17 +128,23 @@ export function Home() {
           {dayARoutine && (
             <button
               onClick={() => startSession('day-a')}
-              className="flex-1 py-3 bg-gray-800 rounded-xl text-gray-300 text-sm font-medium active:bg-gray-700"
+              className="flex-1 rounded-xl overflow-hidden relative active:opacity-80 transition-opacity"
             >
-              Sesión Día A
+              <img src="/BotonSesionA_Raditz.png" alt="Día A" className="w-full h-24 object-cover" />
+              <div className="absolute inset-0 bg-black/40 flex items-end p-2">
+                <span className="text-white text-sm font-bold drop-shadow">Día A</span>
+              </div>
             </button>
           )}
           {dayBRoutine && (
             <button
               onClick={() => startSession('day-b')}
-              className="flex-1 py-3 bg-gray-800 rounded-xl text-gray-300 text-sm font-medium active:bg-gray-700"
+              className="flex-1 rounded-xl overflow-hidden relative active:opacity-80 transition-opacity"
             >
-              Sesión Día B
+              <img src="/BotonSesionB_Nappa.png" alt="Día B" className="w-full h-24 object-cover" />
+              <div className="absolute inset-0 bg-black/40 flex items-end p-2">
+                <span className="text-white text-sm font-bold drop-shadow">Día B</span>
+              </div>
             </button>
           )}
         </div>
