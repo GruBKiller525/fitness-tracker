@@ -5,7 +5,11 @@ import { secondsToMMSS } from '../lib/utils';
 
 export function StretchList() {
   const navigate = useNavigate();
-  const routines = useLiveQuery(() => db.stretchRoutines.toArray());
+  const order = ['stretch-morning', 'stretch-evening', 'stretch-postworkout'];
+  const routines = useLiveQuery(async () => {
+    const all = await db.stretchRoutines.toArray();
+    return all.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+  });
 
   const total = (exercises: { durationSeconds: number }[]) =>
     exercises.reduce((a, b) => a + b.durationSeconds, 0);
