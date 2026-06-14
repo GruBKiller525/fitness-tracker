@@ -95,7 +95,7 @@ export function Home() {
       <img
         src="/Vegeta_Wallpaper.png"
         alt=""
-        className="fixed inset-0 w-full h-full object-cover object-center opacity-30 pointer-events-none select-none z-0"
+        className="fixed inset-0 w-full h-full object-contain object-center opacity-30 pointer-events-none select-none z-0"
       />
       <div className="relative z-10 flex flex-col flex-1">
       {/* Header */}
