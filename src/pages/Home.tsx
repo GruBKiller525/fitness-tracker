@@ -90,7 +90,13 @@ export function Home() {
   const dayLabel = format(new Date(), "EEEE d 'de' MMMM", { locale: es });
 
   return (
-    <div className="flex flex-col min-h-svh pb-20 bg-gray-950">
+    <div className="flex flex-col min-h-svh pb-20 bg-gray-950 relative">
+      <img
+        src="/vegeta_wallpaper.png"
+        alt=""
+        className="fixed inset-0 w-full h-full object-cover opacity-20 pointer-events-none select-none z-0"
+      />
+      <div className="relative z-10 flex flex-col flex-1">
       {/* Header Dragon Ball */}
       <div className="relative overflow-hidden">
         <img
@@ -252,6 +258,7 @@ export function Home() {
             </button>
           </div>
         )}
+      </div>
       </div>
 
       {/* Bottom nav spacer handled by pb-20 */}
