@@ -92,15 +92,15 @@ export function Home() {
 
   return (
     <div className="flex flex-col min-h-svh pb-20 bg-gray-950 relative">
-      <img
-        src="/Vegeta_Wallpaper.png"
-        alt=""
-        className="fixed inset-0 w-full h-full object-contain object-center opacity-30 pointer-events-none select-none z-0"
-      />
       <div className="relative z-10 flex flex-col flex-1">
       {/* Header */}
-      <div className="relative">
-        <div className="px-4 pt-6 pb-4">
+      <div className="relative overflow-hidden">
+        <img
+          src="/Vegeta_Wallpaper.png"
+          alt=""
+          className="absolute right-0 top-0 h-24 w-auto opacity-40 pointer-events-none select-none object-contain object-right-top"
+        />
+        <div className="px-4 pt-6 pb-4 relative z-10">
           <p className="text-orange-400 text-sm capitalize font-medium">{dayLabel}</p>
           <h1 className="text-3xl font-black text-white mt-0.5 tracking-tight">
             ¡A entrenar, guerrero! ⚡
