@@ -59,8 +59,8 @@ export function StretchList() {
 }
 
 function icon(id: string) {
-  if (id === 'stretch-morning') return '/saibaiman1.png';
-  if (id === 'stretch-evening') return '/saibaiman2.png';
-  if (id === 'stretch-postworkout') return '/saibaiman3.png';
-  return '/saibaiman1.png';
+  if (id === 'stretch-morning') return '/Saibaiman1.png';
+  if (id === 'stretch-evening') return '/Saibaiman2.png';
+  if (id === 'stretch-postworkout') return '/Saibaiman3.png';
+  return '/Saibaiman1.png';
 }
