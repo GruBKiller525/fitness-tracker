@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { BottomNav } from '../components/BottomNav';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { db } from '../db/db';
@@ -261,7 +262,7 @@ export function Home() {
       </div>
       </div>
 
-      {/* Bottom nav spacer handled by pb-20 */}
+      <BottomNav />
     </div>
   );
 }
