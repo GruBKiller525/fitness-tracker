@@ -96,7 +96,7 @@ export function Home() {
       {/* Header */}
       <div className="relative overflow-hidden">
         <img
-          src="/Vegeta_Wallpaper.png"
+          src="/vegeta_banner.png"
           alt=""
           className="absolute right-0 top-0 h-24 w-auto opacity-40 pointer-events-none select-none object-contain object-right-top"
         />
