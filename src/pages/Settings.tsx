@@ -192,13 +192,21 @@ export function Settings() {
 function ExerciseCatalog({ onBack }: { onBack: () => void }) {
   const exercises = useLiveQuery(() => db.exercises.orderBy('name').toArray());
   const [showNew, setShowNew] = useState(false);
-  const [form, setForm] = useState({ name: '', muscleGroup: 'pecho' as MuscleGroup, type: 'compound' as Exercise['type'] });
+  const [form, setForm] = useState({ name: '', muscleGroup: 'pecho' as MuscleGroup, type: 'compound' as Exercise['type'], imageUrl: '' });
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editImageUrl, setEditImageUrl] = useState('');
 
   async function saveExercise() {
     if (!form.name.trim()) return;
-    await db.exercises.put({ id: generateId(), ...form });
-    setForm({ name: '', muscleGroup: 'pecho', type: 'compound' });
+    const { imageUrl, ...rest } = form;
+    await db.exercises.put({ id: generateId(), ...rest, ...(imageUrl.trim() ? { imageUrl: imageUrl.trim() } : {}) });
+    setForm({ name: '', muscleGroup: 'pecho', type: 'compound', imageUrl: '' });
     setShowNew(false);
+  }
+
+  async function saveImageUrl(id: string) {
+    await db.exercises.update(id, { imageUrl: editImageUrl.trim() || undefined });
+    setEditingId(null);
   }
 
   async function deleteExercise(id: string) {
@@ -245,6 +253,15 @@ function ExerciseCatalog({ onBack }: { onBack: () => void }) {
                 </button>
               ))}
             </div>
+            <input
+              placeholder="URL imagen / GIF (opcional)"
+              value={form.imageUrl}
+              onChange={(e) => setForm((f) => ({ ...f, imageUrl: e.target.value }))}
+              className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            {form.imageUrl.trim() && (
+              <img src={form.imageUrl} alt="preview" className="w-full max-h-40 object-contain rounded-xl bg-gray-800" />
+            )}
             <button onClick={saveExercise} className="w-full py-3 bg-indigo-600 rounded-xl text-white font-semibold active:bg-indigo-700">
               Guardar
             </button>
@@ -252,17 +269,58 @@ function ExerciseCatalog({ onBack }: { onBack: () => void }) {
         )}
 
         {exercises?.map((ex) => (
-          <div key={ex.id} className="bg-gray-900 rounded-xl px-4 py-3 flex items-center justify-between">
-            <div>
-              <p className="text-white text-sm font-medium">{ex.name}</p>
-              <p className="text-xs text-gray-500">{ex.muscleGroup} · {ex.type}</p>
+          <div key={ex.id} className="bg-gray-900 rounded-xl overflow-hidden">
+            <div className="px-4 py-3 flex items-center justify-between gap-2">
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                {ex.imageUrl ? (
+                  <img src={ex.imageUrl} alt={ex.name} className="w-12 h-12 rounded-lg object-cover flex-shrink-0 bg-gray-800" />
+                ) : (
+                  <div className="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center flex-shrink-0">
+                    <span className="text-gray-600 text-xs">IMG</span>
+                  </div>
+                )}
+                <div className="min-w-0">
+                  <p className="text-white text-sm font-medium truncate">{ex.name}</p>
+                  <p className="text-xs text-gray-500">{ex.muscleGroup} · {ex.type}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1 flex-shrink-0">
+                <button
+                  onClick={() => { setEditingId(editingId === ex.id ? null : ex.id); setEditImageUrl(ex.imageUrl ?? ''); }}
+                  className="w-10 h-10 flex items-center justify-center text-gray-400 active:text-white text-lg"
+                >
+                  🖼
+                </button>
+                <button
+                  onClick={() => deleteExercise(ex.id)}
+                  className="w-10 h-10 flex items-center justify-center text-red-500 active:text-red-400"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
-            <button
-              onClick={() => deleteExercise(ex.id)}
-              className="w-10 h-10 flex items-center justify-center text-red-500 active:text-red-400"
-            >
-              ✕
-            </button>
+            {editingId === ex.id && (
+              <div className="px-4 pb-4 space-y-2 border-t border-gray-800 pt-3">
+                <input
+                  placeholder="Pega URL de imagen o GIF"
+                  value={editImageUrl}
+                  onChange={(e) => setEditImageUrl(e.target.value)}
+                  className="w-full bg-gray-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  autoFocus
+                />
+                {editImageUrl.trim() && (
+                  <img src={editImageUrl} alt="preview" className="w-full max-h-40 object-contain rounded-xl bg-gray-800" />
+                )}
+                <div className="flex gap-2">
+                  <button onClick={() => saveImageUrl(ex.id)} className="flex-1 py-2 bg-indigo-600 rounded-xl text-white text-sm font-medium active:bg-indigo-700">
+                    Guardar
+                  </button>
+                  <button onClick={() => setEditingId(null)} className="flex-1 py-2 bg-gray-700 rounded-xl text-gray-300 text-sm active:bg-gray-600">
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>

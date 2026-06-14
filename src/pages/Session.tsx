@@ -172,6 +172,7 @@ export function Session() {
               exerciseName={ex.name}
               exerciseId={re.exerciseId}
               exerciseType={ex.type}
+              imageUrl={ex.imageUrl}
               targetSets={re.targetSets}
               totalSets={totalSets}
               targetRepsMin={re.targetRepsMin}
@@ -202,6 +203,7 @@ type ExerciseBlockProps = {
   exerciseName: string;
   exerciseId: string;
   exerciseType: 'compound' | 'isolation';
+  imageUrl?: string;
   targetSets: number;
   totalSets: number;
   targetRepsMin: number;
@@ -216,11 +218,12 @@ type ExerciseBlockProps = {
 };
 
 function ExerciseBlock({
-  exerciseName, exerciseId, exerciseType, targetSets, totalSets,
+  exerciseName, exerciseId, exerciseType, imageUrl, targetSets, totalSets,
   targetRepsMin, targetRepsMax, targetRIR, restSeconds,
   getSet, getLastRecord, onSetChange, onComplete, onAddSet,
 }: ExerciseBlockProps) {
   const [lastRecord, setLastRecord] = useState<{ date: string; set: SessionSet } | null>(null);
+  const [imgExpanded, setImgExpanded] = useState(false);
 
   useEffect(() => {
     getLastRecord(exerciseId).then(setLastRecord);
@@ -231,14 +234,35 @@ function ExerciseBlock({
   return (
     <div className="bg-gray-900 rounded-2xl overflow-hidden">
       <div className="px-4 py-3 border-b border-gray-700">
-        <p className="font-semibold text-white text-base">{exerciseName}</p>
-        <p className="text-xs text-gray-400 mt-0.5">
-          {targetSets}×{targetRepsMin}-{targetRepsMax} · RIR {targetRIR} · {restLabel}
-        </p>
-        {lastRecord && (
-          <p className="text-xs text-indigo-400 mt-0.5">
-            Último: {lastRecord.set.weight}kg × {lastRecord.set.reps} reps
-          </p>
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold text-white text-base">{exerciseName}</p>
+            <p className="text-xs text-gray-400 mt-0.5">
+              {targetSets}×{targetRepsMin}-{targetRepsMax} · RIR {targetRIR} · {restLabel}
+            </p>
+            {lastRecord && (
+              <p className="text-xs text-indigo-400 mt-0.5">
+                Último: {lastRecord.set.weight}kg × {lastRecord.set.reps} reps
+              </p>
+            )}
+          </div>
+          {imageUrl && (
+            <button
+              onClick={() => setImgExpanded((v) => !v)}
+              className="flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border border-gray-700 active:border-indigo-500"
+            >
+              <img src={imageUrl} alt={exerciseName} className="w-full h-full object-cover" />
+            </button>
+          )}
+        </div>
+        {imgExpanded && imageUrl && (
+          <div
+            className="mt-3 rounded-xl overflow-hidden cursor-pointer"
+            onClick={() => setImgExpanded(false)}
+          >
+            <img src={imageUrl} alt={exerciseName} className="w-full max-h-64 object-contain bg-gray-800" />
+            <p className="text-xs text-center text-gray-500 py-1">Toca para cerrar</p>
+          </div>
         )}
       </div>
 

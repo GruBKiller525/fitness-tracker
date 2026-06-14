@@ -9,6 +9,7 @@ export type Exercise = {
   name: string;
   muscleGroup: MuscleGroup;
   type: 'compound' | 'isolation';
+  imageUrl?: string;
   notes?: string;
 };
 
