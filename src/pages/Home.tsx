@@ -95,17 +95,12 @@ export function Home() {
       <img
         src="/Vegeta_Wallpaper.png"
         alt=""
-        className="fixed inset-0 w-full h-full object-cover opacity-20 pointer-events-none select-none z-0"
+        className="fixed inset-0 w-full h-full object-cover object-center opacity-30 pointer-events-none select-none z-0"
       />
       <div className="relative z-10 flex flex-col flex-1">
-      {/* Header Dragon Ball */}
-      <div className="relative overflow-hidden">
-        <img
-          src="/dragonball.svg"
-          alt=""
-          className="absolute right-0 top-0 w-48 opacity-30 pointer-events-none select-none"
-        />
-        <div className="px-4 pt-6 pb-4 relative z-10">
+      {/* Header */}
+      <div className="relative">
+        <div className="px-4 pt-6 pb-4">
           <p className="text-orange-400 text-sm capitalize font-medium">{dayLabel}</p>
           <h1 className="text-3xl font-black text-white mt-0.5 tracking-tight">
             ¡A entrenar, guerrero! ⚡
