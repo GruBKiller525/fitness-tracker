@@ -81,6 +81,23 @@ const stretchRoutines: StretchRoutine[] = [
       { name: 'Respiración 4-7-8', durationSeconds: 60, description: 'Inhala 4 seg, mantén 7 seg, exhala 8 seg. Repite 3 veces para relajarte.' },
     ],
   },
+  {
+    id: 'stretch-postworkout',
+    name: 'Post-entreno',
+    description: 'Rutina de 6 minutos para recuperar tras el entrenamiento',
+    exercises: [
+      { name: 'Estiramiento de cuádriceps de pie', durationSeconds: 45, description: 'De pie, dobla la rodilla y agarra el pie por detrás. Mantén el equilibrio.' },
+      { name: 'Estiramiento de isquiotibiales en suelo', durationSeconds: 45, description: 'Tumbado boca arriba, lleva una pierna estirada hacia el pecho y alterna.' },
+      { name: 'Estiramiento de glúteo (figura 4)', durationSeconds: 50, description: 'Tumbado, cruza un tobillo sobre la rodilla contraria y jala la pierna hacia ti.' },
+      { name: 'Estiramiento de pecho con manos unidas', durationSeconds: 40, description: 'De pie, une las manos detrás de la espalda, saca pecho y sube los brazos.' },
+      { name: 'Estiramiento de bíceps en pared', durationSeconds: 35, description: 'Apoya la palma en la pared con el pulgar arriba y gira el cuerpo hacia afuera.' },
+      { name: 'Estiramiento de tríceps sobre cabeza', durationSeconds: 35, description: 'Lleva un codo hacia atrás sobre la cabeza y empuja suavemente con la otra mano.' },
+      { name: 'Estiramiento de dorsales (arco de gato)', durationSeconds: 40, description: 'A cuatro patas, lleva los glúteos hacia los talones y estira los brazos al frente.' },
+      { name: 'Estiramiento de gemelos en escalón', durationSeconds: 40, description: 'Apoya la punta del pie en un escalón, deja caer el talón y aguanta.' },
+      { name: 'Torsión espinal sentado', durationSeconds: 40, description: 'Sentado, cruza una pierna y gira el tronco hacia ese lado apoyando el codo.' },
+      { name: 'Respiración de recuperación', durationSeconds: 30, description: 'Tumbado boca arriba, respira profundo llenando el vientre. Relaja todo el cuerpo.' },
+    ],
+  },
 ];
 
 export async function seedIfEmpty() {
@@ -95,6 +112,8 @@ export async function seedIfEmpty() {
 }
 
 async function seedStretchRoutines() {
-  const count = await db.stretchRoutines.count();
-  if (count === 0) await db.stretchRoutines.bulkPut(stretchRoutines);
+  for (const r of stretchRoutines) {
+    const exists = await db.stretchRoutines.get(r.id);
+    if (!exists) await db.stretchRoutines.put(r);
+  }
 }

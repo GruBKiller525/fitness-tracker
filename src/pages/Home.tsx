@@ -124,37 +124,15 @@ export function Home() {
             ⚡ {todayRoutine.name}
           </button>
         ) : (
-          <div className="space-y-2">
-            <button
-              onClick={() => startSession('day-a')}
-              className="w-full py-4 bg-orange-600 rounded-2xl text-white text-lg font-black active:bg-orange-700 tracking-wide shadow-lg shadow-orange-900/40"
-            >
-              ⚡ Sesión de entrenamiento
-            </button>
-            <button
-              onClick={() => navigate('/stretch/stretch-morning')}
-              className="flex-1 rounded-xl overflow-hidden relative active:opacity-80 transition-opacity h-24"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-700 to-orange-900" />
-              <div className="absolute inset-0 flex flex-col items-start justify-end p-3">
-                <span className="text-white text-sm font-black drop-shadow">🌅 Movilidad mañana</span>
-                <span className="text-orange-200 text-xs">7 min</span>
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/stretch/stretch-evening')}
-              className="flex-1 rounded-xl overflow-hidden relative active:opacity-80 transition-opacity h-24"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 to-gray-900" />
-              <div className="absolute inset-0 flex flex-col items-start justify-end p-3">
-                <span className="text-white text-sm font-black drop-shadow">🌙 Estiramientos noche</span>
-                <span className="text-indigo-300 text-xs">8 min</span>
-              </div>
-            </button>
-          </div>
+          <button
+            onClick={() => startSession('day-a')}
+            className="w-full py-4 bg-orange-600 rounded-2xl text-white text-lg font-black active:bg-orange-700 tracking-wide shadow-lg shadow-orange-900/40"
+          >
+            ⚡ Sesión de entrenamiento
+          </button>
         )}
 
-        {/* Free session buttons */}
+        {/* Session image buttons */}
         <div className="flex gap-2">
           {dayARoutine && (
             <button
@@ -179,6 +157,17 @@ export function Home() {
             </button>
           )}
         </div>
+
+        {/* Estiramientos button - always visible */}
+        <button
+          onClick={() => navigate('/stretch')}
+          className="w-full rounded-xl overflow-hidden relative active:opacity-80 transition-opacity"
+        >
+          <img src="/boton_saibaiman.png" alt="Estiramientos" className="w-full h-24 object-cover" />
+          <div className="absolute inset-0 bg-black/40 flex items-end p-2">
+            <span className="text-white text-sm font-bold drop-shadow">Estiramientos</span>
+          </div>
+        </button>
 
         {/* Habit tracker */}
         <div className="bg-gray-900 rounded-2xl p-4 space-y-3">

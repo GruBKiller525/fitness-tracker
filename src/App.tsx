@@ -9,6 +9,7 @@ import { Stats } from './pages/Stats';
 import { Body } from './pages/Body';
 import { Settings } from './pages/Settings';
 import { StretchGuide } from './pages/StretchGuide';
+import { StretchList } from './pages/StretchList';
 
 export default function App() {
   useEffect(() => {
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/stats" element={<Stats />} />
         <Route path="/body" element={<Body />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/stretch" element={<StretchList />} />
         <Route path="/stretch/:id" element={<StretchGuide />} />
       </Routes>
     </BrowserRouter>
