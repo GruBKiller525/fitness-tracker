@@ -132,10 +132,16 @@ export function Home() {
               ⚡ Sesión de entrenamiento
             </button>
             <button
-              onClick={() => startSession('day-b')}
-              className="w-full py-4 bg-gray-800 rounded-2xl text-white text-lg font-bold active:bg-gray-700 border border-gray-600"
+              onClick={() => navigate('/stretch/stretch-morning')}
+              className="w-full py-3 bg-gray-800 rounded-xl text-white text-base font-bold active:bg-gray-700 border border-gray-600"
             >
-              🧘 Estiramientos
+              🌅 Movilidad mañana <span className="text-gray-400 font-normal text-sm">(7 min)</span>
+            </button>
+            <button
+              onClick={() => navigate('/stretch/stretch-evening')}
+              className="w-full py-3 bg-gray-800 rounded-xl text-white text-base font-bold active:bg-gray-700 border border-gray-600"
+            >
+              🌙 Estiramientos noche <span className="text-gray-400 font-normal text-sm">(8 min)</span>
             </button>
           </div>
         )}

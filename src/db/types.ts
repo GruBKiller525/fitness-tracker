@@ -76,6 +76,20 @@ export type DailyHabit = {
   notes?: string;
 };
 
+export type StretchExercise = {
+  name: string;
+  durationSeconds: number;
+  description?: string;
+  imageUrl?: string;
+};
+
+export type StretchRoutine = {
+  id: ID;
+  name: string;
+  description?: string;
+  exercises: StretchExercise[];
+};
+
 export type AppExport = {
   exercises: Exercise[];
   routines: RoutineDay[];
