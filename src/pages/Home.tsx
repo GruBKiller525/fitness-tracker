@@ -85,7 +85,7 @@ export function Home() {
           className="w-full rounded-xl overflow-hidden relative active:opacity-70 transition-opacity border border-orange-500/50 shadow-lg shadow-black/30"
         >
           <img src="/boton_saibaiman.png" alt="Estiramientos" className="w-full h-24 object-cover" />
-          <div className="absolute inset-0 bg-black/25 backdrop-blur-[1px] flex items-end p-2">
+          <div className="absolute inset-0 bg-black/15 flex items-end p-2">
             <span className="text-white text-sm font-bold drop-shadow">Estiramientos</span>
           </div>
         </button>
@@ -98,7 +98,7 @@ export function Home() {
               className="flex-1 rounded-xl overflow-hidden relative active:opacity-70 transition-opacity border border-orange-500/50 shadow-lg shadow-black/30"
             >
               <img src="/BotonSesionA_Raditz.png" alt="Día A" className="w-full h-24 object-cover" />
-              <div className="absolute inset-0 bg-black/25 backdrop-blur-[1px] flex items-end p-2">
+              <div className="absolute inset-0 bg-black/15 flex items-end p-2">
                 <span className="text-white text-sm font-bold drop-shadow">Día A</span>
               </div>
             </button>
@@ -109,7 +109,7 @@ export function Home() {
               className="flex-1 rounded-xl overflow-hidden relative active:opacity-70 transition-opacity border border-orange-500/50 shadow-lg shadow-black/30"
             >
               <img src="/BotonSesionB_Nappa.png" alt="Día B" className="w-full h-24 object-cover" />
-              <div className="absolute inset-0 bg-black/25 backdrop-blur-[1px] flex items-end p-2">
+              <div className="absolute inset-0 bg-black/15 flex items-end p-2">
                 <span className="text-white text-sm font-bold drop-shadow">Día B</span>
               </div>
             </button>
