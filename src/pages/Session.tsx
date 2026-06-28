@@ -194,6 +194,7 @@ function ExerciseBlock({
 }: ExerciseBlockProps) {
   const [lastRecord, setLastRecord] = useState<{ date: string; set: SessionSet } | null>(null);
   const [imgExpanded, setImgExpanded] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   useEffect(() => {
     getLastRecord(exerciseId).then(setLastRecord);
@@ -201,85 +202,101 @@ function ExerciseBlock({
 
   const restLabel = restSeconds >= 60 ? `${restSeconds / 60}' desc` : `${restSeconds}'' desc`;
 
+  const completedSets = Array.from({ length: totalSets }, (_, i) => i + 1)
+    .filter((n) => getSet(exerciseId, n)?.completed).length;
+
   return (
     <div className="bg-gray-900 rounded-2xl overflow-hidden">
-      <div className="px-4 py-3 border-b border-gray-700">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex-1 min-w-0">
-            <p className="font-semibold text-white text-base">{exerciseName}</p>
-            <p className="text-xs text-gray-400 mt-0.5">
-              {targetSets}×{targetRepsMin}-{targetRepsMax} · RIR {targetRIR} · {restLabel}
+      {/* Header — tap to expand/collapse */}
+      <button
+        onClick={() => setCollapsed((v) => !v)}
+        className="w-full px-4 py-3 flex items-start justify-between gap-2 active:bg-gray-800 transition-colors"
+      >
+        <div className="flex-1 min-w-0 text-left">
+          <p className="font-semibold text-white text-base">{exerciseName}</p>
+          <p className="text-xs text-gray-400 mt-0.5">
+            {targetSets}×{targetRepsMin}-{targetRepsMax} · RIR {targetRIR} · {restLabel}
+          </p>
+          {lastRecord && (
+            <p className="text-xs text-orange-400 mt-0.5">
+              Último: {lastRecord.set.weight}kg × {lastRecord.set.reps} reps
             </p>
-            {lastRecord && (
-              <p className="text-xs text-orange-400 mt-0.5">
-                Último: {lastRecord.set.weight}kg × {lastRecord.set.reps} reps
-              </p>
-            )}
-          </div>
-          {imageUrl && (
-            <button
-              onClick={() => setImgExpanded((v) => !v)}
-              className="flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border border-gray-700 active:border-indigo-500"
-            >
-              <img src={imageUrl} alt={exerciseName} className="w-full h-full object-cover" />
-            </button>
           )}
         </div>
-        {imgExpanded && imageUrl && (
-          <div
-            className="mt-3 rounded-xl overflow-hidden cursor-pointer"
-            onClick={() => setImgExpanded(false)}
-          >
-            <img src={imageUrl} alt={exerciseName} className="w-full max-h-64 object-contain bg-gray-800" />
-            <p className="text-xs text-center text-gray-500 py-1">Toca para cerrar</p>
-          </div>
-        )}
-      </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          {completedSets > 0 && (
+            <span className="text-xs text-green-400 font-semibold">{completedSets}/{totalSets}</span>
+          )}
+          {imageUrl && (
+            <div
+              onClick={(e) => { e.stopPropagation(); setImgExpanded((v) => !v); }}
+              className="w-14 h-14 rounded-xl overflow-hidden border border-gray-700"
+            >
+              <img src={imageUrl} alt={exerciseName} className="w-full h-full object-cover" />
+            </div>
+          )}
+          <span className="text-orange-400 text-xl">{collapsed ? '›' : '⌄'}</span>
+        </div>
+      </button>
 
-      {/* Column headers */}
-      <div className="grid grid-cols-[40px_1fr_1fr_1fr_52px] gap-1 px-3 py-2 text-xs text-gray-500">
-        <span>#</span>
-        <span className="text-center">kg</span>
-        <span className="text-center">reps</span>
-        <span className="text-center">RIR</span>
-        <span />
-      </div>
-
-      <div className="space-y-1 px-3 pb-3">
-        {Array.from({ length: totalSets }, (_, i) => i + 1).map((setNum) => {
-          const s = getSet(exerciseId, setNum);
-          const isExtra = setNum > targetSets;
-
-          // Suggest weight
-          let suggestion: string | null = null;
-          if (lastRecord && setNum === 1 && !s?.weight) {
-            const lastW = lastRecord.set.weight;
-            const bump = exerciseType === 'compound' ? 2.5 : 1;
-            suggestion = `Sugerencia: ${lastW + bump} kg`;
-          }
-
-          return (
-            <SetRow
-              key={setNum}
-              setNumber={setNum}
-              isExtra={isExtra}
-              set={s}
-              suggestion={suggestion}
-              onFieldChange={(field, val) => onSetChange(exerciseId, setNum, field, val)}
-              onComplete={() => onComplete(exerciseId, setNum, restSeconds)}
-            />
-          );
-        })}
-      </div>
-
-      <div className="px-3 pb-3">
-        <button
-          onClick={onAddSet}
-          className="w-full py-2 bg-gray-800 rounded-xl text-gray-400 text-sm active:bg-gray-700"
+      {imgExpanded && imageUrl && (
+        <div
+          className="mx-4 mb-3 rounded-xl overflow-hidden cursor-pointer"
+          onClick={() => setImgExpanded(false)}
         >
-          + serie extra
-        </button>
-      </div>
+          <img src={imageUrl} alt={exerciseName} className="w-full max-h-64 object-contain bg-gray-800" />
+          <p className="text-xs text-center text-gray-500 py-1">Toca para cerrar</p>
+        </div>
+      )}
+
+      {!collapsed && (
+        <>
+          <div className="border-t border-gray-700" />
+          {/* Column headers */}
+          <div className="grid grid-cols-[40px_1fr_1fr_1fr_52px] gap-1 px-3 py-2 text-xs text-gray-500">
+            <span>#</span>
+            <span className="text-center">kg</span>
+            <span className="text-center">reps</span>
+            <span className="text-center">RIR</span>
+            <span />
+          </div>
+
+          <div className="space-y-1 px-3 pb-3">
+            {Array.from({ length: totalSets }, (_, i) => i + 1).map((setNum) => {
+              const s = getSet(exerciseId, setNum);
+              const isExtra = setNum > targetSets;
+
+              let suggestion: string | null = null;
+              if (lastRecord && setNum === 1 && !s?.weight) {
+                const lastW = lastRecord.set.weight;
+                const bump = exerciseType === 'compound' ? 2.5 : 1;
+                suggestion = `Sugerencia: ${lastW + bump} kg`;
+              }
+
+              return (
+                <SetRow
+                  key={setNum}
+                  setNumber={setNum}
+                  isExtra={isExtra}
+                  set={s}
+                  suggestion={suggestion}
+                  onFieldChange={(field, val) => onSetChange(exerciseId, setNum, field, val)}
+                  onComplete={() => onComplete(exerciseId, setNum, restSeconds)}
+                />
+              );
+            })}
+          </div>
+
+          <div className="px-3 pb-3">
+            <button
+              onClick={onAddSet}
+              className="w-full py-2 bg-gray-800 rounded-xl text-gray-400 text-sm active:bg-gray-700"
+            >
+              + serie extra
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
