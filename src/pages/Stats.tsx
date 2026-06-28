@@ -297,7 +297,7 @@ const wikiData: WikiSection[] = [
     ],
   },
   {
-    title: 'Snack postural — Corrección diaria',
+    title: 'Snack P. — Corrección diaria',
     color: 'border-green-500',
     items: [
       {
