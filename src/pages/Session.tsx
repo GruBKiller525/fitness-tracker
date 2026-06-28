@@ -103,8 +103,22 @@ export function Session() {
   }
 
 
+  const bgImage = session.routineDayId === 'day-a'
+    ? '/fondo_dia_a.png'
+    : session.routineDayId === 'day-b'
+    ? '/fondo_dia_b.png'
+    : null;
+
   return (
-    <div className="flex flex-col min-h-svh bg-gray-950">
+    <div className="flex flex-col min-h-svh bg-gray-950 relative">
+      {bgImage && (
+        <img
+          src={bgImage}
+          alt=""
+          className="fixed inset-0 w-full h-full object-cover opacity-15 pointer-events-none select-none z-0"
+        />
+      )}
+      <div className="relative z-10 flex flex-col flex-1">
       {/* Sticky header */}
       <header className="sticky top-0 z-40 bg-gray-900 border-b border-gray-700 px-2 py-3 flex items-center gap-2">
         <button
@@ -156,7 +170,7 @@ export function Session() {
           );
         })}
       </div>
-
+      </div>
     </div>
   );
 }
