@@ -169,7 +169,7 @@ const wikiData: WikiSection[] = [
 ];
 
 export function Guide() {
-  const [openSection, setOpenSection] = useState<number | null>(0);
+  const [openSection, setOpenSection] = useState<number | null>(null);
   const [openItem, setOpenItem] = useState<string | null>(null);
 
   return (
