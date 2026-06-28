@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { BottomNav } from '../components/BottomNav';
@@ -10,6 +11,7 @@ import { getNotionConfig, sendSimpleToNotion } from '../lib/notion';
 export function Home() {
   const navigate = useNavigate();
   const todayStr = today();
+  const [showSportConfirm, setShowSportConfirm] = useState(false);
 
   const routines = useLiveQuery(() => db.routines.toArray());
   const dayARoutine = routines?.find((r) => r.id === 'day-a');
@@ -153,13 +155,7 @@ export function Home() {
 
         {/* Deporte button */}
         <button
-          onClick={async () => {
-            await db.sessions.put({ id: generateId(), date: todayStr, routineDayId: 'sport', energy: 3, sleepHours: 7, sets: [] });
-            const config = getNotionConfig();
-            if (config) {
-              try { await sendSimpleToNotion(config, `⚡ Deporte — ${todayStr}`, todayStr, 'Deporte libre'); } catch { /* silent */ }
-            }
-          }}
+          onClick={() => setShowSportConfirm(true)}
           className="w-full rounded-xl overflow-hidden relative active:opacity-70 transition-opacity border border-orange-500/50 shadow-lg shadow-black/30"
         >
           <img src="/boton_deporte.png" alt="Deporte" className="w-full h-24 object-cover" />
@@ -167,6 +163,37 @@ export function Home() {
             <span className="text-white text-sm font-bold drop-shadow">Deporte</span>
           </div>
         </button>
+
+        {/* Sport confirm dialog */}
+        {showSportConfirm && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-6">
+            <div className="bg-gray-900 rounded-2xl p-6 w-full max-w-sm shadow-xl">
+              <h2 className="text-white font-black text-lg mb-1">¿Registrar deporte?</h2>
+              <p className="text-gray-400 text-sm mb-6">Se guardará una sesión de deporte para hoy.</p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowSportConfirm(false)}
+                  className="flex-1 py-3 rounded-xl bg-gray-800 text-gray-300 font-semibold active:bg-gray-700"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={async () => {
+                    setShowSportConfirm(false);
+                    await db.sessions.put({ id: generateId(), date: todayStr, routineDayId: 'sport', energy: 3, sleepHours: 7, sets: [] });
+                    const config = getNotionConfig();
+                    if (config) {
+                      try { await sendSimpleToNotion(config, `⚡ Deporte — ${todayStr}`, todayStr, 'Deporte libre'); } catch { /* silent */ }
+                    }
+                  }}
+                  className="flex-1 py-3 rounded-xl bg-orange-600 text-white font-semibold active:bg-orange-700"
+                >
+                  Registrar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Summary cards */}
         <div className="grid grid-cols-2 gap-3">
