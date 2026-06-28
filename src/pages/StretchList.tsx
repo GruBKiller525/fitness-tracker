@@ -5,7 +5,7 @@ import { secondsToMMSS } from '../lib/utils';
 
 export function StretchList() {
   const navigate = useNavigate();
-  const order = ['stretch-morning', 'stretch-evening', 'stretch-postworkout'];
+  const order = ['stretch-morning', 'stretch-evening', 'stretch-postworkout', 'stretch-postural'];
   const routines = useLiveQuery(async () => {
     const all = await db.stretchRoutines.toArray();
     return all.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
@@ -63,5 +63,6 @@ function icon(id: string) {
   if (id === 'stretch-morning') return '/Saibaiman1.png';
   if (id === 'stretch-evening') return '/Saibaiman2.png';
   if (id === 'stretch-postworkout') return '/Saibaiman3.png';
+  if (id === 'stretch-postural') return '/boton_postural.png';
   return '/Saibaiman1.png';
 }

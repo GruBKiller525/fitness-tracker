@@ -56,6 +56,21 @@ export function Home() {
     return count;
   })();
 
+  // Racha snack postural: días consecutivos con ≥1 snack postural
+  const posturalStreak = (() => {
+    if (!allStretchLogs) return 0;
+    const dates = new Set(allStretchLogs.filter((l) => l.routineId === 'stretch-postural').map((l) => l.date));
+    let count = 0;
+    let d = new Date();
+    while (true) {
+      const key = format(d, 'yyyy-MM-dd');
+      if (!dates.has(key)) break;
+      count++;
+      d = new Date(d.getTime() - 86400000);
+    }
+    return count;
+  })();
+
   // Racha deporte: semanas consecutivas con ≥1 sesión (gym o estiramiento)
   const sportStreak = (() => {
     if (!allSessions || !allStretchLogs) return 0;
@@ -229,6 +244,11 @@ export function Home() {
                 <img src="/racha_gym.png" alt="" className="w-5 h-5 object-contain rounded" />
                 <span className="text-xs text-gray-400 flex-1">Gym</span>
                 <span className="text-sm font-bold text-orange-400">{gymStreak} sem</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <img src="/racha_postural.png" alt="" className="w-5 h-5 object-contain rounded" />
+                <span className="text-xs text-gray-400 flex-1">Postural</span>
+                <span className="text-sm font-bold text-orange-400">{posturalStreak} días</span>
               </div>
               <div className="flex items-center gap-2">
                 <img src="/racha_deporte.png" alt="" className="w-5 h-5 object-contain rounded" />

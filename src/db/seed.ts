@@ -98,6 +98,16 @@ const stretchRoutines: StretchRoutine[] = [
       { name: 'Respiración de recuperación', durationSeconds: 30, description: 'Tumbado boca arriba, respira profundo llenando el vientre. Relaja todo el cuerpo.' },
     ],
   },
+  {
+    id: 'stretch-postural',
+    name: 'Snack postural',
+    description: 'Rutina rápida para corregir postura',
+    exercises: [
+      { name: 'Chin tucks', durationSeconds: 40, description: 'Mentón hacia atrás ("doble barbilla"), aguanta 3 seg. 10 reps.' },
+      { name: '"W" con escápulas', durationSeconds: 25, description: 'Brazos en W en el aire, aprieta escápulas 3 seg. 5 reps.' },
+      { name: 'Estiramiento pectoral', durationSeconds: 30, description: 'Marco de puerta, brazo a 90°, rota torso hacia afuera. 15 seg/lado.' },
+    ],
+  },
 ];
 
 export async function seedIfEmpty() {
