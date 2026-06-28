@@ -193,16 +193,19 @@ export function Home() {
           <div className="bg-gray-900 rounded-2xl p-4">
             <p className="text-xs text-gray-500 mb-2">Rachas</p>
             <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <img src="/racha_estiramientos.png" alt="Estiramientos" className="w-5 h-5 object-contain rounded" />
+              <div className="flex items-center gap-2">
+                <img src="/racha_estiramientos.png" alt="" className="w-5 h-5 object-contain rounded" />
+                <span className="text-xs text-gray-400 flex-1">Estiramientos</span>
                 <span className="text-sm font-bold text-orange-400">{stretchStreak} días</span>
               </div>
-              <div className="flex items-center justify-between">
-                <img src="/racha_gym.png" alt="Gym" className="w-5 h-5 object-contain rounded" />
+              <div className="flex items-center gap-2">
+                <img src="/racha_gym.png" alt="" className="w-5 h-5 object-contain rounded" />
+                <span className="text-xs text-gray-400 flex-1">Gym</span>
                 <span className="text-sm font-bold text-orange-400">{gymStreak} sem</span>
               </div>
-              <div className="flex items-center justify-between">
-                <img src="/racha_deporte.png" alt="Deporte" className="w-5 h-5 object-contain rounded" />
+              <div className="flex items-center gap-2">
+                <img src="/racha_deporte.png" alt="" className="w-5 h-5 object-contain rounded" />
+                <span className="text-xs text-gray-400 flex-1">Deporte</span>
                 <span className="text-sm font-bold text-orange-400">{sportStreak} sem</span>
               </div>
             </div>
