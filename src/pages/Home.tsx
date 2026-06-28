@@ -194,15 +194,15 @@ export function Home() {
             <p className="text-xs text-gray-500 mb-2">Rachas</p>
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-400">🏋️ Gym</span>
-                <span className="text-sm font-bold text-orange-400">{gymStreak} sem</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-400">🧘 Estiram.</span>
+                <img src="/racha_estiramientos.png" alt="Estiramientos" className="w-5 h-5 object-contain rounded" />
                 <span className="text-sm font-bold text-orange-400">{stretchStreak} días</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-400">⚡ Deporte</span>
+                <img src="/racha_gym.png" alt="Gym" className="w-5 h-5 object-contain rounded" />
+                <span className="text-sm font-bold text-orange-400">{gymStreak} sem</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <img src="/racha_deporte.png" alt="Deporte" className="w-5 h-5 object-contain rounded" />
                 <span className="text-sm font-bold text-orange-400">{sportStreak} sem</span>
               </div>
             </div>
