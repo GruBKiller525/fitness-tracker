@@ -6,7 +6,6 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { db } from '../db/db';
 import { generateId, today, formatDate } from '../lib/utils';
-import type { DailyHabit } from '../db/types';
 
 export function Home() {
   const navigate = useNavigate();
@@ -27,9 +26,6 @@ export function Home() {
     ).sortBy('date')
   );
   const latestWeight = weights?.[weights.length - 1];
-
-  const habit = useLiveQuery(() => db.habits.get(todayStr));
-
 
   async function startSession(routineId: string) {
     const id = generateId();
@@ -54,36 +50,6 @@ export function Home() {
     });
     setQuickWeight('');
     setShowWeightInput(false);
-  }
-
-  async function toggleHabit(field: keyof Pick<DailyHabit, 'morningMobility' | 'eveningStretch'>) {
-    const existing = await db.habits.get(todayStr);
-    if (existing) {
-      await db.habits.update(todayStr, { [field]: !existing[field] });
-    } else {
-      await db.habits.put({
-        id: todayStr,
-        date: todayStr,
-        morningMobility: field === 'morningMobility',
-        eveningStretch: field === 'eveningStretch',
-        posturalSnacks: 0,
-      });
-    }
-  }
-
-  async function changeSnacks(delta: number) {
-    const existing = await db.habits.get(todayStr);
-    if (existing) {
-      await db.habits.update(todayStr, { posturalSnacks: Math.max(0, existing.posturalSnacks + delta) });
-    } else {
-      await db.habits.put({
-        id: todayStr,
-        date: todayStr,
-        morningMobility: false,
-        eveningStretch: false,
-        posturalSnacks: Math.max(0, delta),
-      });
-    }
   }
 
   const dayLabel = format(new Date(), "EEEE d 'de' MMMM", { locale: es });
@@ -145,47 +111,16 @@ export function Home() {
           </div>
         </button>
 
-        {/* Habit tracker */}
-        <div className="bg-gray-900 rounded-2xl p-4 space-y-3">
-          <p className="text-sm font-semibold text-orange-400">🔥 Entrenamiento diario</p>
-          <div className="flex gap-2">
-            <button
-              onClick={() => toggleHabit('morningMobility')}
-              className={`flex-1 py-3 rounded-xl text-sm font-medium transition-colors ${
-                habit?.morningMobility ? 'bg-green-700 text-white' : 'bg-gray-800 text-gray-400'
-              }`}
-            >
-              {habit?.morningMobility ? '✓' : '○'} Movilidad mañana
-            </button>
-            <button
-              onClick={() => toggleHabit('eveningStretch')}
-              className={`flex-1 py-3 rounded-xl text-sm font-medium transition-colors ${
-                habit?.eveningStretch ? 'bg-green-700 text-white' : 'bg-gray-800 text-gray-400'
-              }`}
-            >
-              {habit?.eveningStretch ? '✓' : '○'} Estiram. noche
-            </button>
-          </div>
-          <div className="flex items-center justify-between bg-gray-800 rounded-xl px-4 py-3">
-            <span className="text-sm text-gray-300">Snacks posturales</span>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => changeSnacks(-1)}
-                className="w-10 h-10 bg-gray-700 rounded-lg text-xl text-white flex items-center justify-center active:bg-gray-600"
-              >
-                −
-              </button>
-              <span className="text-2xl font-bold text-white w-6 text-center">
-                {habit?.posturalSnacks ?? 0}
-              </span>
-              <button
-                onClick={() => changeSnacks(1)}
-                className="w-10 h-10 bg-orange-700 rounded-lg text-xl text-white flex items-center justify-center active:bg-orange-600"
-              >
-                +
-              </button>
-            </div>
-          </div>
+        {/* Banner entrenamiento diario */}
+        <div className="rounded-2xl overflow-hidden bg-gray-900">
+          <img
+            src="/banner_entrenamiento.png"
+            alt="Entrenamiento diario"
+            className="w-full object-cover"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
+          />
         </div>
 
         {/* Summary cards */}
