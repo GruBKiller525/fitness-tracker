@@ -124,6 +124,19 @@ export function Home() {
           </div>
         </button>
 
+        {/* Deporte button */}
+        <button
+          onClick={async () => {
+            await db.sessions.put({ id: generateId(), date: todayStr, routineDayId: 'sport', energy: 3, sleepHours: 7, sets: [] });
+          }}
+          className="w-full rounded-xl overflow-hidden relative active:opacity-70 transition-opacity border border-orange-500/50 shadow-lg shadow-black/30"
+        >
+          <img src="/boton_deporte.png" alt="Deporte" className="w-full h-24 object-cover" />
+          <div className="absolute inset-0 bg-black/15 flex items-end p-2">
+            <span className="text-white text-sm font-bold drop-shadow">Registrar deporte</span>
+          </div>
+        </button>
+
         {/* Session image buttons */}
         <div className="flex gap-2">
           {dayARoutine && (
