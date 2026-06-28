@@ -23,7 +23,18 @@ export function History() {
     return s.routineDayId === filter;
   });
 
-  const trainedDays = new Set(sessions?.map((s) => s.date) ?? []);
+  const stretchLogs = useLiveQuery(() => db.stretchLogs.toArray());
+
+  function dayColor(iso: string): string | null {
+    const daySessions = sessions?.filter((s) => s.date === iso) ?? [];
+    const hasGym = daySessions.some((s) => s.routineDayId === 'day-a' || s.routineDayId === 'day-b');
+    const hasSport = daySessions.some((s) => s.routineDayId === 'sport');
+    const hasStretch = stretchLogs?.some((l) => l.date === iso) ?? false;
+    if (hasGym) return 'bg-orange-600 text-white font-bold';
+    if (hasSport) return 'bg-blue-600 text-white font-bold';
+    if (hasStretch) return 'bg-green-600 text-white font-bold';
+    return null;
+  }
 
   const monthStart = startOfMonth(parseISO(`${calMonth}-01`));
   const monthEnd = endOfMonth(monthStart);
@@ -59,13 +70,11 @@ export function History() {
           {Array.from({ length: firstDow }).map((_, i) => <span key={`pad-${i}`} />)}
           {days.map((day) => {
             const iso = format(day, 'yyyy-MM-dd');
-            const trained = trainedDays.has(iso);
+            const color = dayColor(iso);
             return (
               <div
                 key={iso}
-                className={`aspect-square flex items-center justify-center rounded-full text-sm ${
-                  trained ? 'bg-orange-600 text-white font-bold' : 'text-gray-500'
-                }`}
+                className={`aspect-square flex items-center justify-center rounded-full text-sm ${color ?? 'text-gray-500'}`}
               >
                 {day.getDate()}
               </div>
