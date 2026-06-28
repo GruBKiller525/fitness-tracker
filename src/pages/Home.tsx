@@ -55,8 +55,8 @@ export function Home() {
   const dayLabel = format(new Date(), "EEEE d 'de' MMMM", { locale: es });
 
   return (
-    <div className="flex flex-col min-h-svh bg-gray-950 relative pb-20">
-      <div className="relative z-10 flex flex-col flex-1">
+    <div className="bg-gray-950 relative pb-20">
+      <div className="relative z-10">
       {/* Header */}
       <div className="relative overflow-hidden">
         <img
