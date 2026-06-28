@@ -63,6 +63,6 @@ function icon(id: string) {
   if (id === 'stretch-morning') return '/Saibaiman1.png';
   if (id === 'stretch-evening') return '/Saibaiman2.png';
   if (id === 'stretch-postworkout') return '/Saibaiman3.png';
-  if (id === 'stretch-postural') return '/boton_postural.png';
+  if (id === 'stretch-postural') return '/snackpostural.png';
   return '/Saibaiman1.png';
 }
