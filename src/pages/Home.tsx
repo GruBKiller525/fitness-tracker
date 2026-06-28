@@ -241,7 +241,7 @@ export function Home() {
                 <span className="text-sm font-bold text-orange-400">{posturalStreak} días</span>
               </div>
               <div className="flex items-center gap-2">
-                <img src="/racha_estiramientos.png" alt="" className="w-5 h-5 object-contain rounded" />
+                <img src="/racha_estiramientos2.png" alt="" className="w-5 h-5 object-contain rounded" />
                 <span className="text-xs text-gray-400 flex-1">Estiramientos</span>
                 <span className="text-sm font-bold text-orange-400">{stretchStreak} días</span>
               </div>
