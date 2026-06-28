@@ -95,7 +95,7 @@ const wikiData: WikiSection[] = [
     ],
   },
   {
-    title: 'Snack P. — Corrección diaria',
+    title: 'Estiramientos — Corrección diaria',
     color: 'border-green-500',
     items: [
       {
