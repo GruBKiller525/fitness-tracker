@@ -116,7 +116,7 @@ export function Session() {
           src={bgImage}
           alt=""
           className="fixed inset-0 w-full h-full object-cover opacity-15 pointer-events-none select-none z-0"
-          style={session.routineDayId === 'day-b' ? { objectPosition: 'left bottom' } : undefined}
+          style={session.routineDayId === 'day-b' ? { objectPosition: 'left 80%', transform: 'translateY(10%)' } : undefined}
         />
       )}
       <div className="relative z-10 flex flex-col flex-1">
