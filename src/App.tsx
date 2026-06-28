@@ -7,6 +7,7 @@ import { SessionSummary } from './pages/SessionSummary';
 import { History } from './pages/History';
 import { Stats } from './pages/Stats';
 import { Body } from './pages/Body';
+import { Guide } from './pages/Guide';
 import { Settings } from './pages/Settings';
 import { StretchGuide } from './pages/StretchGuide';
 import { StretchList } from './pages/StretchList';
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/history" element={<History />} />
         <Route path="/stats" element={<Stats />} />
         <Route path="/body" element={<Body />} />
+        <Route path="/guide" element={<Guide />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/stretch" element={<StretchList />} />
         <Route path="/stretch/:id" element={<StretchGuide />} />
