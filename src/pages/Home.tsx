@@ -237,7 +237,7 @@ export function Home() {
             <div className="space-y-1.5">
               <div className="flex items-center gap-2">
                 <img src="/racha_estiramientos.png" alt="" className="w-5 h-5 object-contain rounded" />
-                <span className="text-xs text-gray-400 flex-1">Postural</span>
+                <span className="text-xs text-gray-400 flex-1">Snack P.</span>
                 <span className="text-sm font-bold text-orange-400">{posturalStreak} días</span>
               </div>
               <div className="flex items-center gap-2">
