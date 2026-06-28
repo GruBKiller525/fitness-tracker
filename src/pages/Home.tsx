@@ -56,6 +56,11 @@ export function Home() {
 
   return (
     <div className="flex flex-col min-h-svh bg-gray-950 relative pb-20">
+      <img
+        src="/fondo_home.png"
+        alt=""
+        className="fixed inset-0 w-full h-full object-cover opacity-15 pointer-events-none select-none z-0"
+      />
       <div className="relative z-10 flex flex-col flex-1">
       {/* Header */}
       <div className="relative overflow-hidden">
