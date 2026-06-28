@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db/db';
-import { secondsToMMSS } from '../lib/utils';
+import { secondsToMMSS, generateId, today } from '../lib/utils';
 import type { StretchExercise } from '../db/types';
 
 export function StretchGuide() {
@@ -30,9 +30,10 @@ export function StretchGuide() {
     setStep('active');
   }
 
-  function next() {
+  async function next() {
     if (!routine) return;
     if (current + 1 >= routine.exercises.length) {
+      await db.stretchLogs.put({ id: generateId(), date: today(), routineId: routine.id });
       navigate(-1);
       return;
     }

@@ -16,15 +16,32 @@ export function Home() {
 
   const weekStart = format(new Date(Date.now() - 6 * 86400000), 'yyyy-MM-dd');
   const allSessions = useLiveQuery(() => db.sessions.orderBy('date').reverse().toArray());
+  const allStretchLogs = useLiveQuery(() => db.stretchLogs.orderBy('date').reverse().toArray());
   const weekSessions = allSessions?.filter((s) => s.date >= weekStart);
   const dayACount = weekSessions?.filter((s) => s.routineDayId === 'day-a').length ?? 0;
   const dayBCount = weekSessions?.filter((s) => s.routineDayId === 'day-b').length ?? 0;
   const totalWeek = weekSessions?.length ?? 0;
 
-  // Racha: días consecutivos con sesión
-  const streak = (() => {
+  // Racha gym: semanas consecutivas con ≥2 sesiones de gym
+  const gymStreak = (() => {
     if (!allSessions) return 0;
-    const dates = new Set(allSessions.map((s) => s.date));
+    let weeks = 0;
+    let d = new Date();
+    while (true) {
+      const weekEnd = format(d, 'yyyy-MM-dd');
+      const weekBegin = format(new Date(d.getTime() - 6 * 86400000), 'yyyy-MM-dd');
+      const count = allSessions.filter((s) => s.date >= weekBegin && s.date <= weekEnd).length;
+      if (count < 2) break;
+      weeks++;
+      d = new Date(d.getTime() - 7 * 86400000);
+    }
+    return weeks;
+  })();
+
+  // Racha estiramientos: días consecutivos con ≥1 estiramiento
+  const stretchStreak = (() => {
+    if (!allStretchLogs) return 0;
+    const dates = new Set(allStretchLogs.map((l) => l.date));
     let count = 0;
     let d = new Date();
     while (true) {
@@ -34,6 +51,26 @@ export function Home() {
       d = new Date(d.getTime() - 86400000);
     }
     return count;
+  })();
+
+  // Racha deporte: semanas consecutivas con ≥1 sesión (gym o estiramiento)
+  const sportStreak = (() => {
+    if (!allSessions || !allStretchLogs) return 0;
+    const allDates = new Set([
+      ...allSessions.map((s) => s.date),
+      ...allStretchLogs.map((l) => l.date),
+    ]);
+    let weeks = 0;
+    let d = new Date();
+    while (true) {
+      const weekEnd = format(d, 'yyyy-MM-dd');
+      const weekBegin = format(new Date(d.getTime() - 6 * 86400000), 'yyyy-MM-dd');
+      const hasActivity = [...allDates].some((date) => date >= weekBegin && date <= weekEnd);
+      if (!hasActivity) break;
+      weeks++;
+      d = new Date(d.getTime() - 7 * 86400000);
+    }
+    return weeks;
   })();
 
   async function startSession(routineId: string) {
@@ -134,14 +171,23 @@ export function Home() {
             </div>
           </div>
 
-          {/* Racha */}
-          <div className="bg-gray-900 rounded-2xl p-4 flex flex-col justify-between">
-            <p className="text-xs text-gray-500">Racha actual</p>
-            <div>
-              <p className="text-4xl font-black text-orange-400">{streak}</p>
-              <p className="text-xs text-gray-400">{streak === 1 ? 'día' : 'días'} seguidos</p>
+          {/* Rachas */}
+          <div className="bg-gray-900 rounded-2xl p-4">
+            <p className="text-xs text-gray-500 mb-2">Rachas</p>
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-400">🏋️ Gym</span>
+                <span className="text-sm font-bold text-orange-400">{gymStreak} sem</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-400">🧘 Estiram.</span>
+                <span className="text-sm font-bold text-orange-400">{stretchStreak} días</span>
+              </div>
+              <div className="border-t border-gray-700 pt-1.5 flex items-center justify-between">
+                <span className="text-xs text-gray-400">⚡ Deporte</span>
+                <span className="text-sm font-bold text-white">{sportStreak} sem</span>
+              </div>
             </div>
-            <p className="text-xs text-gray-600">{streak === 0 ? '¡Empieza hoy!' : streak >= 3 ? '🔥 ¡Sigue así!' : '💪 ¡Buen ritmo!'}</p>
           </div>
         </div>
 

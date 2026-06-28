@@ -90,6 +90,12 @@ export type StretchRoutine = {
   exercises: StretchExercise[];
 };
 
+export type StretchLog = {
+  id: ID;
+  date: string;
+  routineId: string;
+};
+
 export type AppExport = {
   exercises: Exercise[];
   routines: RoutineDay[];
