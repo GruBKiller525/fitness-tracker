@@ -108,25 +108,16 @@ function buildNotionPage(databaseId: string, p: NotionPayload) {
         date: { start: p.sessionDate },
       },
       Rutina: {
-        select: { name: p.routineName },
-      },
-      'Volumen (kg)': {
-        number: p.totalVolume,
+        rich_text: [{ text: { content: p.routineName } }],
       },
       'Series completadas': {
         number: p.completedSets,
       },
-      Energía: {
-        select: { name: `${p.energy}/5` },
-      },
-      'Sueño (h)': {
-        number: p.sleepHours,
-      },
       ...(p.durationMinutes !== undefined && {
         'Duración (min)': { number: p.durationMinutes },
       }),
-      ...(p.bodyweight !== undefined && {
-        'Peso corporal (kg)': { number: p.bodyweight },
+      ...(p.notes !== undefined && {
+        Notas: { rich_text: [{ text: { content: p.notes } }] },
       }),
     },
     children: [
