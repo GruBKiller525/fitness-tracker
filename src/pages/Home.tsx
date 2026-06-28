@@ -134,7 +134,7 @@ export function Home() {
           <h1 className="text-3xl font-black text-white mt-0.5 tracking-tight">
             ¡A entrenar, guerrero! ⚡
           </h1>
-          <p className="text-gray-500 text-xs mt-1">El poder se forja en el esfuerzo</p>
+          <p className="text-gray-500 text-xs mt-1">La fuerza de los Saiyajin no tiene límite alguno</p>
         </div>
       </div>
 
