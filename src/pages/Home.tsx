@@ -74,6 +74,17 @@ export function Home() {
       </div>
 
       <div className="px-4 space-y-3">
+        {/* Estiramientos button - always visible */}
+        <button
+          onClick={() => navigate('/stretch')}
+          className="w-full rounded-xl overflow-hidden relative active:opacity-70 transition-opacity"
+        >
+          <img src="/boton_saibaiman.png" alt="Estiramientos" className="w-full h-24 object-cover" />
+          <div className="absolute inset-0 bg-black/15 flex items-end p-2">
+            <span className="text-white text-sm font-bold drop-shadow">Estiramientos</span>
+          </div>
+        </button>
+
         {/* Session image buttons */}
         <div className="flex gap-2">
           {dayARoutine && (
@@ -99,17 +110,6 @@ export function Home() {
             </button>
           )}
         </div>
-
-        {/* Estiramientos button - always visible */}
-        <button
-          onClick={() => navigate('/stretch')}
-          className="w-full rounded-xl overflow-hidden relative active:opacity-70 transition-opacity"
-        >
-          <img src="/boton_saibaiman.png" alt="Estiramientos" className="w-full h-24 object-cover" />
-          <div className="absolute inset-0 bg-black/15 flex items-end p-2">
-            <span className="text-white text-sm font-bold drop-shadow">Estiramientos</span>
-          </div>
-        </button>
 
         {/* Summary cards */}
         <div className="grid grid-cols-2 gap-3">
@@ -177,7 +177,7 @@ export function Home() {
           <img
             src="/banner_entrenamiento.png"
             alt="Entrenamiento diario"
-            className="w-full object-cover opacity-60"
+            className="w-full object-cover"
             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
           />
         </div>
