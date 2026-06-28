@@ -20,20 +20,27 @@ export function Home() {
   const weekStart = format(new Date(Date.now() - 6 * 86400000), 'yyyy-MM-dd');
   const allSessions = useLiveQuery(() => db.sessions.orderBy('date').reverse().toArray());
   const allStretchLogs = useLiveQuery(() => db.stretchLogs.orderBy('date').reverse().toArray());
-  const weekSessions = allSessions?.filter((s) => s.date >= weekStart);
-  const dayACount = weekSessions?.filter((s) => s.routineDayId === 'day-a').length ?? 0;
-  const dayBCount = weekSessions?.filter((s) => s.routineDayId === 'day-b').length ?? 0;
-  const totalWeek = weekSessions?.length ?? 0;
 
-  // Racha gym: semanas consecutivas con ≥2 sesiones de gym
+  // Solo cuentan sesiones de gym con al menos 1 serie completada
+  const completedGymSessions = allSessions?.filter(
+    (s) => (s.routineDayId === 'day-a' || s.routineDayId === 'day-b') && s.sets.some((set) => set.completed)
+  ) ?? [];
+  const sportSessions = allSessions?.filter((s) => s.routineDayId === 'sport') ?? [];
+
+  const weekSessions = allSessions?.filter((s) => s.date >= weekStart);
+  const dayACount = completedGymSessions.filter((s) => s.date >= weekStart && s.routineDayId === 'day-a').length;
+  const dayBCount = completedGymSessions.filter((s) => s.date >= weekStart && s.routineDayId === 'day-b').length;
+  const totalWeek = (weekSessions?.filter((s) => s.routineDayId === 'sport').length ?? 0) + dayACount + dayBCount + (allStretchLogs?.filter((l) => l.date >= weekStart).length ?? 0);
+
+  // Racha gym: semanas consecutivas con ≥2 sesiones de gym completadas
   const gymStreak = (() => {
-    if (!allSessions) return 0;
+    if (!completedGymSessions.length) return 0;
     let weeks = 0;
     let d = new Date();
     while (true) {
       const weekEnd = format(d, 'yyyy-MM-dd');
       const weekBegin = format(new Date(d.getTime() - 6 * 86400000), 'yyyy-MM-dd');
-      const count = allSessions.filter((s) => s.date >= weekBegin && s.date <= weekEnd).length;
+      const count = completedGymSessions.filter((s) => s.date >= weekBegin && s.date <= weekEnd).length;
       if (count < 2) break;
       weeks++;
       d = new Date(d.getTime() - 7 * 86400000);
@@ -71,11 +78,12 @@ export function Home() {
     return count;
   })();
 
-  // Racha deporte: semanas consecutivas con ≥1 sesión (gym o estiramiento)
+  // Racha deporte: semanas consecutivas con ≥1 actividad completada
   const sportStreak = (() => {
-    if (!allSessions || !allStretchLogs) return 0;
+    if (!allStretchLogs) return 0;
     const allDates = new Set([
-      ...allSessions.map((s) => s.date),
+      ...completedGymSessions.map((s) => s.date),
+      ...sportSessions.map((s) => s.date),
       ...allStretchLogs.map((l) => l.date),
     ]);
     let weeks = 0;
