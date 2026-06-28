@@ -15,7 +15,8 @@ export function StretchList() {
     exercises.reduce((a, b) => a + b.durationSeconds, 0);
 
   return (
-    <div className="min-h-svh bg-gray-950 flex flex-col">
+    <div className="min-h-svh bg-gray-950 flex flex-col relative">
+      <img src="/fondo_stretch.png" alt="" className="fixed inset-0 w-full h-full object-cover opacity-15 pointer-events-none select-none z-0" />
       <header className="sticky top-0 z-40 bg-gray-900 border-b border-gray-700 px-2 py-3 flex items-center gap-2">
         <button
           onClick={() => navigate(-1)}

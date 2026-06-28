@@ -66,7 +66,8 @@ export function StretchGuide() {
   const pct = timeLeft / ex.durationSeconds;
 
   return (
-    <div className="min-h-svh bg-gray-950 flex flex-col">
+    <div className="min-h-svh bg-gray-950 flex flex-col relative">
+      <img src="/fondo_stretch.png" alt="" className="fixed inset-0 w-full h-full object-cover opacity-15 pointer-events-none select-none z-0" />
       {/* Header */}
       <header className="sticky top-0 z-40 bg-gray-900 border-b border-gray-700 px-2 py-3 flex items-center gap-2">
         <button onClick={() => setStep('list')} className="w-10 h-10 flex items-center justify-center text-orange-400 text-2xl">‹</button>
@@ -171,7 +172,8 @@ function RoutineList({
   const total = routine.exercises.reduce((a, b) => a + b.durationSeconds, 0);
 
   return (
-    <div className="min-h-svh bg-gray-950 flex flex-col">
+    <div className="min-h-svh bg-gray-950 flex flex-col relative">
+      <img src="/fondo_stretch.png" alt="" className="fixed inset-0 w-full h-full object-cover opacity-15 pointer-events-none select-none z-0" />
       <header className="sticky top-0 z-40 bg-gray-900 border-b border-gray-700 px-2 py-3 flex items-center gap-2">
         <button onClick={onBack} className="w-10 h-10 flex items-center justify-center text-orange-400 text-2xl">‹</button>
         <h1 className="text-lg font-semibold text-white flex-1">{routine.name}</h1>
