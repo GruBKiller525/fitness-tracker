@@ -55,7 +55,7 @@ export function Home() {
   const dayLabel = format(new Date(), "EEEE d 'de' MMMM", { locale: es });
 
   return (
-    <div className="flex flex-col min-h-svh pb-20 bg-gray-950 relative">
+    <div className="flex flex-col min-h-svh bg-gray-950 relative pb-20">
       <div className="relative z-10 flex flex-col flex-1">
       {/* Header */}
       <div className="relative overflow-hidden">
@@ -73,16 +73,16 @@ export function Home() {
         </div>
       </div>
 
-      <div className="px-4 space-y-4">
+      <div className="px-4 space-y-3">
         {/* Session image buttons */}
         <div className="flex gap-2">
           {dayARoutine && (
             <button
               onClick={() => startSession('day-a')}
-              className="flex-1 rounded-xl overflow-hidden relative active:opacity-80 transition-opacity"
+              className="flex-1 rounded-xl overflow-hidden relative active:opacity-70 transition-opacity"
             >
               <img src="/BotonSesionA_Raditz.png" alt="Día A" className="w-full h-24 object-cover" />
-              <div className="absolute inset-0 bg-black/40 flex items-end p-2">
+              <div className="absolute inset-0 bg-black/15 flex items-end p-2">
                 <span className="text-white text-sm font-bold drop-shadow">Día A</span>
               </div>
             </button>
@@ -90,10 +90,10 @@ export function Home() {
           {dayBRoutine && (
             <button
               onClick={() => startSession('day-b')}
-              className="flex-1 rounded-xl overflow-hidden relative active:opacity-80 transition-opacity"
+              className="flex-1 rounded-xl overflow-hidden relative active:opacity-70 transition-opacity"
             >
               <img src="/BotonSesionB_Nappa.png" alt="Día B" className="w-full h-24 object-cover" />
-              <div className="absolute inset-0 bg-black/40 flex items-end p-2">
+              <div className="absolute inset-0 bg-black/15 flex items-end p-2">
                 <span className="text-white text-sm font-bold drop-shadow">Día B</span>
               </div>
             </button>
@@ -103,10 +103,10 @@ export function Home() {
         {/* Estiramientos button - always visible */}
         <button
           onClick={() => navigate('/stretch')}
-          className="w-full rounded-xl overflow-hidden relative active:opacity-80 transition-opacity"
+          className="w-full rounded-xl overflow-hidden relative active:opacity-70 transition-opacity"
         >
           <img src="/boton_saibaiman.png" alt="Estiramientos" className="w-full h-24 object-cover" />
-          <div className="absolute inset-0 bg-black/40 flex items-end p-2">
+          <div className="absolute inset-0 bg-black/15 flex items-end p-2">
             <span className="text-white text-sm font-bold drop-shadow">Estiramientos</span>
           </div>
         </button>
@@ -173,11 +173,11 @@ export function Home() {
         )}
 
         {/* Banner entrenamiento diario */}
-        <div className="rounded-2xl overflow-hidden bg-gray-900">
+        <div className="rounded-2xl overflow-hidden relative">
           <img
             src="/banner_entrenamiento.png"
             alt="Entrenamiento diario"
-            className="w-full object-cover"
+            className="w-full object-cover opacity-60"
             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
           />
         </div>
