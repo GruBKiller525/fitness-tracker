@@ -4,7 +4,6 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db/db';
 import { secondsToMMSS, e1rm } from '../lib/utils';
 import type { SessionSet } from '../db/types';
-import { RestTimer } from '../components/RestTimer';
 
 export function Session() {
   const { id } = useParams<{ id: string }>();
@@ -17,7 +16,6 @@ export function Session() {
   );
   const exercises = useLiveQuery(() => db.exercises.toArray());
 
-  const [restTimer, setRestTimer] = useState<{ seconds: number } | null>(null);
   const [elapsed, setElapsed] = useState(0);
   const startRef = useRef<number>(Date.now());
 
@@ -47,9 +45,9 @@ export function Session() {
     await db.sessions.update(id, { sets });
   }
 
-  async function completeSet(exerciseId: string, setIndex: number, restSeconds: number) {
-    await updateSet(exerciseId, setIndex, 'completed', true);
-    setRestTimer({ seconds: restSeconds });
+  async function toggleComplete(exerciseId: string, setIndex: number) {
+    const current = session?.sets.find((s) => s.exerciseId === exerciseId && s.setNumber === setIndex);
+    await updateSet(exerciseId, setIndex, 'completed', !(current?.completed ?? false));
   }
 
   async function addExtraSet(exerciseId: string, targetSets: number) {
@@ -152,19 +150,13 @@ export function Session() {
               getSet={getSet}
               getLastRecord={getLastRecord}
               onSetChange={updateSet}
-              onComplete={completeSet}
+              onComplete={toggleComplete}
               onAddSet={() => addExtraSet(re.exerciseId, re.targetSets)}
             />
           );
         })}
       </div>
 
-      {restTimer && (
-        <RestTimer
-          seconds={restTimer.seconds}
-          onDone={() => setRestTimer(null)}
-        />
-      )}
     </div>
   );
 }
@@ -183,7 +175,7 @@ type ExerciseBlockProps = {
   getSet: (exerciseId: string, setNumber: number) => SessionSet | undefined;
   getLastRecord: (exerciseId: string) => Promise<{ date: string; set: SessionSet } | null>;
   onSetChange: (exerciseId: string, setNumber: number, field: keyof SessionSet, value: number | boolean) => void;
-  onComplete: (exerciseId: string, setNumber: number, restSeconds: number) => void;
+  onComplete: (exerciseId: string, setNumber: number) => void;
   onAddSet: () => void;
 };
 
@@ -281,7 +273,7 @@ function ExerciseBlock({
                   set={s}
                   suggestion={suggestion}
                   onFieldChange={(field, val) => onSetChange(exerciseId, setNum, field, val)}
-                  onComplete={() => onComplete(exerciseId, setNum, restSeconds)}
+                  onComplete={() => onComplete(exerciseId, setNum)}
                 />
               );
             })}
@@ -332,23 +324,19 @@ function SetRow({ setNumber, isExtra, set, suggestion, onFieldChange, onComplete
         <NumInput
           value={set?.weight ?? 0}
           onChange={(v) => onFieldChange('weight', v)}
-          disabled={done}
         />
         <NumInput
           value={set?.reps ?? 0}
           onChange={(v) => onFieldChange('reps', v)}
-          disabled={done}
         />
         <NumInput
           value={set?.rir ?? 2}
           onChange={(v) => onFieldChange('rir', v)}
-          disabled={done}
         />
         <button
           onClick={onComplete}
-          disabled={done}
           className={`h-12 rounded-xl text-xl flex items-center justify-center transition-colors ${
-            done ? 'bg-green-800 text-green-400' : 'bg-gray-700 text-gray-300 active:bg-green-700'
+            done ? 'bg-green-800 text-green-400 active:bg-red-900' : 'bg-gray-700 text-gray-300 active:bg-green-700'
           }`}
         >
           {done ? '✓' : '○'}
