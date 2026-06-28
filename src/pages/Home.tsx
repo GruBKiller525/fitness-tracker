@@ -111,18 +111,6 @@ export function Home() {
           </div>
         </button>
 
-        {/* Banner entrenamiento diario */}
-        <div className="rounded-2xl overflow-hidden bg-gray-900">
-          <img
-            src="/banner_entrenamiento.png"
-            alt="Entrenamiento diario"
-            className="w-full object-cover"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = 'none';
-            }}
-          />
-        </div>
-
         {/* Summary cards */}
         <div className="grid grid-cols-2 gap-3">
           {/* Last session */}
@@ -183,6 +171,16 @@ export function Home() {
             </button>
           </div>
         )}
+
+        {/* Banner entrenamiento diario */}
+        <div className="rounded-2xl overflow-hidden bg-gray-900">
+          <img
+            src="/banner_entrenamiento.png"
+            alt="Entrenamiento diario"
+            className="w-full object-cover"
+            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+          />
+        </div>
       </div>
       </div>
 
