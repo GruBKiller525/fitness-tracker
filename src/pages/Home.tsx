@@ -132,9 +132,9 @@ export function Home() {
         <div className="px-4 pt-6 pb-4 relative z-10">
           <p className="text-orange-400 text-sm capitalize font-medium">{dayLabel}</p>
           <h1 className="text-3xl font-black text-white mt-0.5 tracking-tight">
-            ¡A entrenar, guerrero! ⚡
+            La fuerza de los Saiyajin no tiene límite alguno
           </h1>
-          <p className="text-gray-500 text-xs mt-1">La fuerza de los Saiyajin no tiene límite alguno</p>
+          <p className="text-gray-500 text-xs mt-1">El poder se forja en el esfuerzo</p>
         </div>
       </div>
 
