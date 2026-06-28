@@ -287,13 +287,20 @@ function ExerciseBlock({
             })}
           </div>
 
-          <div className="px-3 pb-3">
+          <div className="px-3 pb-3 space-y-3">
             <button
               onClick={onAddSet}
               className="w-full py-2 bg-gray-800 rounded-xl text-gray-400 text-sm active:bg-gray-700"
             >
               + serie extra
             </button>
+            {imageUrl && (
+              <img
+                src={imageUrl}
+                alt={exerciseName}
+                className="w-full max-h-48 object-contain rounded-xl bg-gray-800"
+              />
+            )}
           </div>
         </>
       )}
