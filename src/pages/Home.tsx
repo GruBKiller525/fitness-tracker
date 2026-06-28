@@ -5,7 +5,7 @@ import { BottomNav } from '../components/BottomNav';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { db } from '../db/db';
-import { generateId, today, formatDate, getTodayRoutineSlot } from '../lib/utils';
+import { generateId, today, formatDate } from '../lib/utils';
 import type { DailyHabit } from '../db/types';
 
 export function Home() {
@@ -30,8 +30,6 @@ export function Home() {
 
   const habit = useLiveQuery(() => db.habits.get(todayStr));
 
-  const slot = getTodayRoutineSlot();
-  const todayRoutine = slot === 'A' ? dayARoutine : slot === 'B' ? dayBRoutine : null;
 
   async function startSession(routineId: string) {
     const id = generateId();
