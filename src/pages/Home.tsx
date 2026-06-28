@@ -201,9 +201,9 @@ export function Home() {
                 <span className="text-xs text-gray-400">🧘 Estiram.</span>
                 <span className="text-sm font-bold text-orange-400">{stretchStreak} días</span>
               </div>
-              <div className="border-t border-gray-700 pt-1.5 flex items-center justify-between">
+              <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-400">⚡ Deporte</span>
-                <span className="text-sm font-bold text-white">{sportStreak} sem</span>
+                <span className="text-sm font-bold text-orange-400">{sportStreak} sem</span>
               </div>
             </div>
           </div>
