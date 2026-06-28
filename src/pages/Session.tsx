@@ -115,11 +115,7 @@ export function Session() {
         <img
           src={bgImage}
           alt=""
-          className={`fixed inset-0 w-full h-full opacity-15 pointer-events-none select-none z-0 ${
-            session.routineDayId === 'day-b'
-              ? 'object-contain object-bottom'
-              : 'object-cover'
-          }`}
+          className="fixed inset-0 w-full h-full opacity-15 pointer-events-none select-none z-0 object-cover"
         />
       )}
       <div className="relative z-10 flex flex-col flex-1">
