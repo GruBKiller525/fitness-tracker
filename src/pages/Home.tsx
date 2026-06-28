@@ -1,31 +1,40 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { BottomNav } from '../components/BottomNav';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { db } from '../db/db';
-import { generateId, today, formatDate } from '../lib/utils';
+import { generateId, today } from '../lib/utils';
 
 export function Home() {
   const navigate = useNavigate();
   const todayStr = today();
-  const [quickWeight, setQuickWeight] = useState('');
-  const [showWeightInput, setShowWeightInput] = useState(false);
-
-  const sessions = useLiveQuery(() => db.sessions.orderBy('date').reverse().limit(1).toArray());
-  const lastSession = sessions?.[0];
 
   const routines = useLiveQuery(() => db.routines.toArray());
   const dayARoutine = routines?.find((r) => r.id === 'day-a');
   const dayBRoutine = routines?.find((r) => r.id === 'day-b');
 
-  const weights = useLiveQuery(() =>
-    db.measurements.where('date').aboveOrEqual(
-      format(new Date(Date.now() - 30 * 86400000), 'yyyy-MM-dd')
-    ).sortBy('date')
-  );
-  const latestWeight = weights?.[weights.length - 1];
+  const weekStart = format(new Date(Date.now() - 6 * 86400000), 'yyyy-MM-dd');
+  const allSessions = useLiveQuery(() => db.sessions.orderBy('date').reverse().toArray());
+  const weekSessions = allSessions?.filter((s) => s.date >= weekStart);
+  const dayACount = weekSessions?.filter((s) => s.routineDayId === 'day-a').length ?? 0;
+  const dayBCount = weekSessions?.filter((s) => s.routineDayId === 'day-b').length ?? 0;
+  const totalWeek = weekSessions?.length ?? 0;
+
+  // Racha: días consecutivos con sesión
+  const streak = (() => {
+    if (!allSessions) return 0;
+    const dates = new Set(allSessions.map((s) => s.date));
+    let count = 0;
+    let d = new Date();
+    while (true) {
+      const key = format(d, 'yyyy-MM-dd');
+      if (!dates.has(key)) break;
+      count++;
+      d = new Date(d.getTime() - 86400000);
+    }
+    return count;
+  })();
 
   async function startSession(routineId: string) {
     const id = generateId();
@@ -38,18 +47,6 @@ export function Home() {
       sets: [],
     });
     navigate(`/session/${id}`);
-  }
-
-  async function saveWeight() {
-    const w = parseFloat(quickWeight);
-    if (isNaN(w) || w <= 0) return;
-    await db.measurements.put({
-      id: generateId(),
-      date: todayStr,
-      weight: w,
-    });
-    setQuickWeight('');
-    setShowWeightInput(false);
   }
 
   const dayLabel = format(new Date(), "EEEE d 'de' MMMM", { locale: es });
@@ -118,64 +115,35 @@ export function Home() {
 
         {/* Summary cards */}
         <div className="grid grid-cols-2 gap-3">
-          {/* Last session */}
+          {/* Sesiones semana */}
           <div className="bg-gray-900 rounded-2xl p-4">
-            <p className="text-xs text-gray-500 mb-1">Última sesión</p>
-            {lastSession ? (
-              <>
-                <p className="text-sm font-semibold text-white leading-tight">
-                  {routines?.find((r) => r.id === lastSession.routineDayId)?.name?.split('—')[0]?.trim() ?? '—'}
-                </p>
-                <p className="text-xs text-gray-400 mt-1">{formatDate(lastSession.date)}</p>
-                <p className="text-xs text-orange-400 mt-0.5">
-                  {lastSession.sets.filter((s) => s.completed).length} series
-                </p>
-              </>
-            ) : (
-              <p className="text-sm text-gray-500">Sin sesiones aún</p>
-            )}
+            <p className="text-xs text-gray-500 mb-2">Últimos 7 días</p>
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-400">Día A</span>
+                <span className="text-sm font-bold text-orange-400">{dayACount}x</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-400">Día B</span>
+                <span className="text-sm font-bold text-orange-400">{dayBCount}x</span>
+              </div>
+              <div className="border-t border-gray-700 pt-1.5 flex items-center justify-between">
+                <span className="text-xs text-gray-400">Total</span>
+                <span className="text-sm font-bold text-white">{totalWeek} sesiones</span>
+              </div>
+            </div>
           </div>
 
-          {/* Bodyweight */}
-          <div className="bg-gray-900 rounded-2xl p-4">
-            <p className="text-xs text-gray-500 mb-1">Peso corporal</p>
-            {latestWeight ? (
-              <>
-                <p className="text-2xl font-bold text-white">{latestWeight.weight}<span className="text-sm font-normal text-gray-400"> kg</span></p>
-                <p className="text-xs text-gray-400 mt-0.5">{formatDate(latestWeight.date)}</p>
-              </>
-            ) : (
-              <p className="text-sm text-gray-500">Sin registros</p>
-            )}
-            <button
-              onClick={() => setShowWeightInput(!showWeightInput)}
-              className="mt-2 text-xs text-orange-400 underline"
-            >
-              + Registrar hoy
-            </button>
+          {/* Racha */}
+          <div className="bg-gray-900 rounded-2xl p-4 flex flex-col justify-between">
+            <p className="text-xs text-gray-500">Racha actual</p>
+            <div>
+              <p className="text-4xl font-black text-orange-400">{streak}</p>
+              <p className="text-xs text-gray-400">{streak === 1 ? 'día' : 'días'} seguidos</p>
+            </div>
+            <p className="text-xs text-gray-600">{streak === 0 ? '¡Empieza hoy!' : streak >= 3 ? '🔥 ¡Sigue así!' : '💪 ¡Buen ritmo!'}</p>
           </div>
         </div>
-
-        {/* Quick weight input */}
-        {showWeightInput && (
-          <div className="bg-gray-900 rounded-2xl p-4 flex gap-3">
-            <input
-              type="number"
-              inputMode="decimal"
-              pattern="[0-9]*\.?[0-9]*"
-              placeholder="Peso en kg"
-              value={quickWeight}
-              onChange={(e) => setQuickWeight(e.target.value)}
-              className="flex-1 bg-gray-800 rounded-xl px-4 py-3 text-white text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-            <button
-              onClick={saveWeight}
-              className="px-5 bg-orange-600 rounded-xl text-white font-semibold active:bg-orange-700"
-            >
-              OK
-            </button>
-          </div>
-        )}
 
         {/* Banner entrenamiento diario */}
         <div className="rounded-2xl overflow-hidden relative">
