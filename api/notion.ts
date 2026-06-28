@@ -102,7 +102,7 @@ function buildNotionPage(databaseId: string, p: NotionPayload) {
     parent: { database_id: databaseId },
     properties: {
       Nombre: {
-        title: [{ text: { content: `${p.routineName} — ${p.sessionDate}` } }],
+        title: [{ text: { content: (p as { _nombre?: string })._nombre ?? `${p.routineName} — ${p.sessionDate}` } }],
       },
       Fecha: {
         date: { start: p.sessionDate },

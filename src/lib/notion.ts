@@ -40,6 +40,39 @@ export function clearNotionConfig(): void {
   localStorage.removeItem(STORAGE_KEY);
 }
 
+export async function sendSimpleToNotion(
+  config: NotionConfig,
+  nombre: string,
+  date: string,
+  rutina: string,
+  notas?: string
+): Promise<string> {
+  const res = await fetch('/api/notion', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      token: config.token,
+      databaseId: config.databaseId,
+      payload: {
+        sessionDate: date,
+        routineName: rutina,
+        energy: 3,
+        sleepHours: 7,
+        totalVolume: 0,
+        completedSets: 0,
+        targetSets: 0,
+        exercises: [],
+        _nombre: nombre,
+        notes: notas,
+      },
+    }),
+  });
+
+  const data = (await res.json()) as { url?: string; error?: string };
+  if (!res.ok) throw new Error(data.error ?? `Error ${res.status}`);
+  return data.url ?? '';
+}
+
 export async function sendSessionToNotion(
   config: NotionConfig,
   payload: NotionSessionPayload

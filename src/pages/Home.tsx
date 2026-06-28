@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { db } from '../db/db';
 import { generateId, today } from '../lib/utils';
+import { getNotionConfig, sendSimpleToNotion } from '../lib/notion';
 
 export function Home() {
   const navigate = useNavigate();
@@ -154,6 +155,10 @@ export function Home() {
         <button
           onClick={async () => {
             await db.sessions.put({ id: generateId(), date: todayStr, routineDayId: 'sport', energy: 3, sleepHours: 7, sets: [] });
+            const config = getNotionConfig();
+            if (config) {
+              try { await sendSimpleToNotion(config, `⚡ Deporte — ${todayStr}`, todayStr, 'Deporte libre'); } catch { /* silent */ }
+            }
           }}
           className="w-full rounded-xl overflow-hidden relative active:opacity-70 transition-opacity border border-orange-500/50 shadow-lg shadow-black/30"
         >

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db/db';
 import { secondsToMMSS, generateId, today } from '../lib/utils';
+import { getNotionConfig, sendSimpleToNotion } from '../lib/notion';
 import type { StretchExercise } from '../db/types';
 
 export function StretchGuide() {
@@ -33,7 +34,14 @@ export function StretchGuide() {
   async function next() {
     if (!routine) return;
     if (current + 1 >= routine.exercises.length) {
-      await db.stretchLogs.put({ id: generateId(), date: today(), routineId: routine.id });
+      const dateStr = today();
+      await db.stretchLogs.put({ id: generateId(), date: dateStr, routineId: routine.id });
+      const config = getNotionConfig();
+      if (config) {
+        try {
+          await sendSimpleToNotion(config, `🧘 ${routine.name} — ${dateStr}`, dateStr, routine.name);
+        } catch { /* silent */ }
+      }
       navigate(-1);
       return;
     }
