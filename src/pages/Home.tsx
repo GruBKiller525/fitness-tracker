@@ -110,23 +110,6 @@ export function Home() {
       </div>
 
       <div className="px-4 space-y-4">
-        {/* Main CTA */}
-        {todayRoutine ? (
-          <button
-            onClick={() => startSession(todayRoutine.id)}
-            className="w-full py-5 bg-orange-600 rounded-2xl text-white text-xl font-black active:bg-orange-700 transition-colors shadow-lg shadow-orange-900/40 tracking-wide"
-          >
-            ⚡ {todayRoutine.name}
-          </button>
-        ) : (
-          <button
-            onClick={() => startSession('day-a')}
-            className="w-full py-4 bg-orange-600 rounded-2xl text-white text-lg font-black active:bg-orange-700 tracking-wide shadow-lg shadow-orange-900/40"
-          >
-            ⚡ Sesión de entrenamiento
-          </button>
-        )}
-
         {/* Session image buttons */}
         <div className="flex gap-2">
           {dayARoutine && (
