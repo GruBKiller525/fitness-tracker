@@ -164,7 +164,7 @@ export function Home() {
         >
           <img src="/boton_deporte.png" alt="Deporte" className="w-full h-24 object-cover" />
           <div className="absolute inset-0 bg-black/15 flex items-end p-2">
-            <span className="text-white text-sm font-bold drop-shadow">Registrar deporte</span>
+            <span className="text-white text-sm font-bold drop-shadow">Deporte</span>
           </div>
         </button>
 
